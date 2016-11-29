@@ -51,7 +51,7 @@ router.route('/books')
                 book.image = results.thumbnail;
                 book.authors = results.authors;
                 book.pageCount = results.pageCount;
-                book.owner = req.user.userId;
+                book.owner = /*req.user.userId*/'no owener';
                 book.save(function(err) {
                     if (err) {
                         res.status(500).send("Database error");

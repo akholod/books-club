@@ -4,8 +4,9 @@ const router = express.Router();
 
 //logout func
 router.get('/', function(req, res) {
+    console.log(req.user);
     req.logout();
-    res.redirect('/');
+    res.redirect('/#');
 });
 
 module.exports = router;

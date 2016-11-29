@@ -11,11 +11,22 @@ const flash = require('connect-flash');
 const favicon = require('serve-favicon');
 
 const port = process.env.PORT || 8080;
+require('./config/passport')(passport);
 require('./db');
 
 let index = require('./routes/index');
+let books = require('./routes/books');
+let booksId = require('./routes/books_id');
+let userBooks = require('./routes/user_books');
+let searchBooks = require('./routes/search-books');
+let signup = require('./routes/signup');
+let login = require('./routes/login');
+let logout = require('./routes/logout');
+let profile = require('./routes/profile');
 
+//init app
 let app = express();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -27,7 +38,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//for passport auth
+app.use(session({secret: 'mysecret'}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+//router
 app.use('/', index);
+app.use('/api', books);
+app.use('/api', booksId);
+app.use('/api', userBooks);
+app.use('/api', searchBooks);
+app.use('/signup', signup);
+app.use('/login', login);
+app.use('/logout', logout);
+app.use('/api', profile);
 
 app.listen(port, () => {
     console.log('App listen on port ' + port);
@@ -63,11 +89,8 @@ app.use(function(err, req, res, next) {
     });
 });
 
-
 module.exports = app;
 
-
-module.exports = app;
 
 
 

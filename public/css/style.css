@@ -1,7 +1,40 @@
 body {
   font-size: 1.8rem;
+  background-color: #333;
+  color: #fff;
 }
 
 a {
   color: #00B7FF;
+}
+.item {
+  position: relative;
+}
+.trade {
+  position: absolute;
+  left: 10%;
+  cursor: pointer;
+  color: red;
+}
+/* clearfix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.grid {
+  text-align: center;
+}
+.grid-item {
+  width: 160px;
+  height: 200px;
+  float: left;
+  border-radius: 5px;
+}
+.panel-body {
+  background-color: #222;
+}
+.panel-body span {
+   padding: 5% 7%;
 }
