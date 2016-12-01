@@ -12,6 +12,7 @@ let bookSchema = new Schema({
     image: String,
     authors: Array,
     pageCount: Number,
+    description: String,
     owner: String,
     request: {
         user: String,

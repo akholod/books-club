@@ -13,8 +13,7 @@ var Router = Backbone.Router.extend({
     },
     home: function () {
         $('#template').html('');
-        new BooksCatalogView();
-
+        new BooksCatalogView(Books);
     },
     showLogin: function () {
         $('#template').html('');

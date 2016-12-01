@@ -15,10 +15,11 @@ let AddBookMenu = Backbone.Model.extend({
             type: "POST",
             data: ({
                 "bookTitle" : this.search,
-                "bookLang" : this.lang
+                "bookLang" : $('#bookLang').prop('checked')
             }),
             success: (data) => {
                 this.books = data;
+                new SearchBooksCatalogView(Books, data);
             }
         })
     }

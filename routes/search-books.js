@@ -8,15 +8,17 @@ const booksGoogle = require('google-books-search');
 
 router.post('/books/search', function(req, res) {
     let bookSearchOptions = {
-        limit: 5,
+        limit: 6,
         type: 'books',
         lang: 'ru'
     };
+
+    if(req.body.bookLang == 'true') {
+        console.log(req.body.bookLang);
+        bookSearchOptions.lang = 'en';
+    }
     if(req.body.bookTitle.length < 0) {//book title must have > 3 symbols
         return res.status(400).json('{"error": "Book title is to short"}')
-    }
-    if(req.body.bookLang) {//if lang is not English set option lang (two-letter ISO-639-1 code)
-        bookSearchOptions.lang = 'en';
     }
 
     booksGoogle.search(req.body.bookTitle, bookSearchOptions, (error, results) => {

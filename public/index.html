@@ -21,7 +21,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/#">Каталог</a></li>
-                <li><a href="/#userBooks">Мои Книги</a></li>
+                <li><a href="/#userBooks">Добавить книгу</a></li>
                 <li><a href="/#userProfile">Мой профиль</a></li>
             </ul>
             <ul id="userMenu" class="nav navbar-nav navbar-right">
@@ -43,42 +43,49 @@
 </script>
 
 <script id="userProfile" type="text/template">
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title">Профиль пользователя</h3>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Профиль пользователя</h3>
+                </div>
+                <div class="panel-body">
+                    <h3>Имя - <%= name %></h3>
+                    <p>Email - <%= email %> </p>
+                    <p>City - <%= city %></p>
+                </div>
+            </div>
         </div>
-        <div class="panel-body">
-            <h3><span>Имя - <%= name %></span> <span>Email - <%= email %> </span> <span>City - <%= city %></span></h3>
-        </div>
-    </div>
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title">Исходящие запросы</h3>
-        </div>
-        <div class="panel-body">
+        <div class="col-sm-8">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Исходящие запросы</h3>
+                </div>
+                <div class="panel-body">
 
+                </div>
+            </div>
         </div>
     </div>
 </script>
 
 
 <script id="searchTemplate" type="text/template">
-
     <h1>Введите название книги, которую хотите добавить</h1>
-
-        <div class="col-sm-2">
-            <input id="bookLang"  type="checkbox" name="bookLang"> EN
-        </div>
-
-        <div class="form-group">
-            <div class="col-sm-7">
-                <input id="searchField" type="text" name="searchField" placeholder="Введите название книги" class="form-control"/>
+        <div class="row search-form">
+            <div class="col-sm-2 search-lang">
+                <input id="bookLang"  type="checkbox" name="bookLang" value="en"> EN
             </div>
-            <div class="col-sm-3 text-left">
-                <button id="searchBtn"  class="btn btn-success">Поиск</button>
+
+            <div class="form-group">
+                <div class="col-sm-7">
+                    <input id="searchField" type="text" name="searchField" placeholder="Введите название книги" class="form-control"/>
+                </div>
+                <div class="col-sm-3 text-left">
+                    <button id="searchBtn"  class="btn btn-success">Поиск</button>
+                </div>
             </div>
         </div>
-
     <div id="userBooks">
 
     </div>
@@ -87,6 +94,10 @@
 <script id="bookTemplate" type="text/template">
     <img src="<%=image %>"/>
     <div class="trade glyphicon glyphicon-retweet"></div>
+</script>
+
+<script id="searchBook" class="user-books" type="text/template">
+    <img src="<%=thumbnail %>"/>
 </script>
 
 <!--login template-->
@@ -180,6 +191,8 @@
 <script src="js/views/VUserProfile.js"></script>
 <script src="js/views/VBook.js"></script>
 <script src="js/views/VLogin.js"></script>
+<script src="js/views/VSearchBooks.js"></script>
+<script src="js/views/VSearchBooksColl.js"></script>
 
 <script src="js/routers/router.js"></script>
 

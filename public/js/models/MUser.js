@@ -23,6 +23,7 @@ let User = Backbone.Model.extend({
                     name: data.name,
                     city: data.city,
                     wishList: data.wishList,
+                    userId: data.userId
                 });
                 if(window.location.hash === '#login') {
                     myRouter.navigate('userProfile', {trigger: true});
