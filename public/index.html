@@ -45,11 +45,42 @@
 <script id="userProfile" type="text/template">
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h3 class="panel-title">User profile</h3>
+            <h3 class="panel-title">Профиль пользователя</h3>
         </div>
         <div class="panel-body">
             <h3><span>Имя - <%= name %></span> <span>Email - <%= email %> </span> <span>City - <%= city %></span></h3>
         </div>
+    </div>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Исходящие запросы</h3>
+        </div>
+        <div class="panel-body">
+
+        </div>
+    </div>
+</script>
+
+
+<script id="searchTemplate" type="text/template">
+
+    <h1>Введите название книги, которую хотите добавить</h1>
+
+        <div class="col-sm-2">
+            <input id="bookLang"  type="checkbox" name="bookLang"> EN
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-7">
+                <input id="searchField" type="text" name="searchField" placeholder="Введите название книги" class="form-control"/>
+            </div>
+            <div class="col-sm-3 text-left">
+                <button id="searchBtn"  class="btn btn-success">Поиск</button>
+            </div>
+        </div>
+
+    <div id="userBooks">
+
     </div>
 </script>
 
@@ -132,6 +163,25 @@
 <script src="bower_components/underscore/underscore-min.js"></script>
 <script src="bower_components/backbone/backbone-min.js"></script>
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+
+<script src="js/models/MAddBookMenu.js"></script>
+<script src="js/models/MBook.js"></script>
+<script src="js/models/MLogin.js"></script>
+<script src="js/models/MSignup.js"></script>
+<script src="js/models/MUser.js"></script>
+<script src="js/models/MUserMenu.js"></script>
+
+<script src="js/collections/CBooks.js"></script>
+
+<script src="js/views/VAddBookMenu.js"></script>
+<script src="js/views/VBooksCatalog.js"></script>
+<script src="js/views/VSignup.js"></script>
+<script src="js/views/VUserMenu.js"></script>
+<script src="js/views/VUserProfile.js"></script>
+<script src="js/views/VBook.js"></script>
+<script src="js/views/VLogin.js"></script>
+
+<script src="js/routers/router.js"></script>
 
 <script src="js/app.js"></script>
 </body>

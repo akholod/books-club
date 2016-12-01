@@ -16,7 +16,7 @@ a {
   cursor: pointer;
   color: red;
 }
-/* clearfix */
+
 .grid:after {
   content: '';
   display: block;
@@ -36,5 +36,5 @@ a {
   background-color: #222;
 }
 .panel-body span {
-   padding: 5% 7%;
+   padding: 5% 25px;
 }
