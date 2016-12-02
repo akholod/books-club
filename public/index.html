@@ -67,6 +67,16 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Ваши книги</h3>
+            </div>
+            <div class="panel-body">
+                <div id="userBooks"></div>
+            </div>
+        </div>
+    </div>
 </script>
 
 
@@ -86,9 +96,7 @@
                 </div>
             </div>
         </div>
-    <div id="userBooks">
-
-    </div>
+    <div id="searchResults"></div>
 </script>
 
 <script id="bookTemplate" type="text/template">
@@ -98,6 +106,11 @@
 
 <script id="searchBook" class="user-books" type="text/template">
     <img src="<%=thumbnail %>"/>
+</script>
+
+<script id="userBooksTemp" type="text/template">
+    <img src="<%=image %>"/>
+    <div class="remove glyphicon glyphicon-remove"></div>
 </script>
 
 <!--login template-->
@@ -181,8 +194,10 @@
 <script src="js/models/MSignup.js"></script>
 <script src="js/models/MUser.js"></script>
 <script src="js/models/MUserMenu.js"></script>
+<script src="js/models/MUserBook.js"></script>
 
 <script src="js/collections/CBooks.js"></script>
+<script src="js/collections/CUserBooks.js"></script>
 
 <script src="js/views/VAddBookMenu.js"></script>
 <script src="js/views/VBooksCatalog.js"></script>
@@ -192,6 +207,8 @@
 <script src="js/views/VBook.js"></script>
 <script src="js/views/VLogin.js"></script>
 <script src="js/views/VSearchBooks.js"></script>
+<script src="js/views/VUserBook.js"></script>
+<script src="js/views/VUserBookColl.js"></script>
 <script src="js/views/VSearchBooksColl.js"></script>
 
 <script src="js/routers/router.js"></script>

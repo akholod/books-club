@@ -1,17 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
 body {
   font-size: 1.8rem;
   background-color: #333;
   color: #fff;
+  font-family: 'Roboto', sans-serif;
 }
-
+h1,h2,h3,p,a {
+  font-family: 'Lato', cursive ;
+}
 a {
   color: #00B7FF;
 }
-.item {
+.item, .user-books {
   position: relative;
   margin: 25px auto;
 }
-.trade {
+.trade, .remove {
   position: absolute;
   left: 10%;
   cursor: pointer;

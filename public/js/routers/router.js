@@ -36,6 +36,7 @@ var Router = Backbone.Router.extend({
             return myRouter.navigate('login', {trigger: true});
         }
         userProfileView.render();
+        new UserBooksView(UserBooks);
     }
 
 });

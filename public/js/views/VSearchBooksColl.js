@@ -3,13 +3,12 @@
  */
 'use strict';
 var SearchBooksCatalogView = Backbone.View.extend({
-    el: '#userBooks',
-
+    el: '#searchResults',
     initialize: function(Collection, collectionData = {}) {
         this.collection = new Collection(collectionData);
         this.render();
         this.listenTo( this.collection, 'add', this.renderBook );
-        //this.listenTo( this.collection, 'reset', this.render );
+
     },
 // отображение библиотеки посредством вывода каждой книги из коллекции
     render: function() {
@@ -25,6 +24,6 @@ var SearchBooksCatalogView = Backbone.View.extend({
             model: item
         });
         this.$el.append( bookView.render().el );
-    },
+    }
 
 });
