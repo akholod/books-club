@@ -2,35 +2,28 @@
  * Created by andrey on 01.12.16.
  */
 'use strict';
+var SearchBooksCatalogView = Backbone.View.extend({
+    el: '#searchResults',
+    initialize: function(Collection, collectionData = {}) {
+        this.collection = new Collection(collectionData);
+        this.render();
+        this.listenTo( this.collection, 'add', this.renderBook );
 
-var SearchBookView = Backbone.View.extend({
-    tagName: 'div',
-    className: 'search-books grid-item',
-    events: {
-        'click' : 'addToUserBooks'
     },
-    template: _.template( $('#searchBook').html() ),
+// отображение библиотеки посредством вывода каждой книги из коллекции
     render: function() {
-        this.$el.html( this.template( this.model.toJSON() ));
-        return this;
+        this.$el.html('');
+        this.collection.each(function( item ) {
+            this.renderBook( item );
+        }, this );
     },
-    addToUserBooks : function () {
-        alert(this.model.get('title'));
-        $.ajax({
-            url: "/api/books/",
-            type: "POST",
-            data: ({
-                "title" : this.model.get('title'),
-                "language" : this.model.get('language'),
-                "image" : this.model.get('thumbnail'),
-                "authors" : this.model.get('authors'),
-                "pageCount" : this.model.get('pageCount'),
-                "description" : this.model.get('description'),
-                "owner" : currentUser.userId,
-            }),
-            success: (data) => {
-                alert('Книга добавлена');
-            }
-        })
+// отображение книги с помощью создания представления BookView
+// и добавления отображаемого элемента в элемент библиотеки
+    renderBook: function( item ) {
+        var bookView = new SearchBookView({
+            model: item
+        });
+        this.$el.append( bookView.render().el );
     }
+
 });

@@ -14,10 +14,8 @@ let bookSchema = new Schema({
     pageCount: Number,
     description: String,
     owner: String,
-    request: {
-        user: String,
-        accepted: {type: Boolean, default: false}
-    },
+    requestUser: String,
+    requestAccepted: {type: Boolean, default: false},
     createdAt: Date
 });
 

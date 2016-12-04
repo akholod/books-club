@@ -37,6 +37,7 @@ var Router = Backbone.Router.extend({
         }
         userProfileView.render();
         new UserBooksView(UserBooks);
+        new BookRequestsView(BookRequests);
     }
 
 });

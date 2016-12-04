@@ -15,7 +15,7 @@ a {
 }
 .item, .user-books {
   position: relative;
-  margin: 25px auto;
+  margin: 20px auto;
 }
 .trade, .remove {
   position: absolute;

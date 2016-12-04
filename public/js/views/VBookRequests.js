@@ -1,9 +1,9 @@
+/**
+ * Created by andrey on 04.12.16.
+ */
 'use strict';
-var UserBooksView = Backbone.View.extend({
-    el: '#userBooks',
-    events: {
-
-    },
+var BookRequestsView = Backbone.View.extend({
+    el: '#bookRequests',
     initialize: function(Collection, collectionData) {
         this.collection = new Collection(collectionData);
         this.collection.fetch();
@@ -20,9 +20,9 @@ var UserBooksView = Backbone.View.extend({
 // отображение книги с помощью создания представления BookView
 // и добавления отображаемого элемента в элемент библиотеки
     renderBook: function( item ) {
-        var userBookView = new UserBookView({
+        var bookRequestView = new BookRequestView({
             model: item
         });
-        this.$el.append( userBookView.render().el );
+        this.$el.append( bookRequestView.render().el );
     }
 });

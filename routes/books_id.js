@@ -19,7 +19,8 @@ router.route('/books/:book_id')
         });
     })
     .put(function(req, res) {//update book title in db, request body must have new title as 'UpdateTitle'
-        BooksModel.update({bookId: req.params.book_id}, {title: req.body.UpdateTitle},(err) => {
+        console.log(req.user.local.email);
+        BooksModel.update({bookId: req.params.book_id}, {requestUser: req.user.local.email},(err) => {
             if (err) {
                 res.status(500).send("Database error");
                 return new Error(err);

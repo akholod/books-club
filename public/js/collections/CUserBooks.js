@@ -1,6 +1,6 @@
 'use strict';
 
 var UserBooks = Backbone.Collection.extend({
-    model: UserBook,
+    model: Book,
     url: 'api/userbooks'
 });

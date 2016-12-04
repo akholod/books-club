@@ -11,6 +11,7 @@ router.get('/user', isLoggedIn, function(req, res) {
     res.json(req.user);
 });
 
+
 // if they aren't redirect them to the home page
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {

@@ -1,6 +1,8 @@
+/**
+ * Created by andrey on 04.12.16.
+ */
 'use strict';
-
-var UserBookView = Backbone.View.extend({
+var BookRequestView = Backbone.View.extend({
     tagName: 'div',
     className: 'user-books grid-item',
     events: {
