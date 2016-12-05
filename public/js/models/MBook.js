@@ -15,7 +15,7 @@ let Book = Backbone.Model.extend({
             url: "/api/books/" + this.get('bookId'),
             type: "PUT",
             success: (data) => {
-                alert('Книга добавлена');
+                alert('Запррос добавлен');
             }
         })
     },

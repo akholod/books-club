@@ -4,7 +4,7 @@ var UserBookView = Backbone.View.extend({
     tagName: 'div',
     className: 'user-books grid-item',
     events: {
-        'click .remove' : 'removeRequest'
+        'click .remove' : 'removeUserBooks'
     },
     template: _.template( $('#userBooksTemp').html() ),
     initialize : function () {
@@ -15,8 +15,8 @@ var UserBookView = Backbone.View.extend({
         this.$el.html( this.template( this.model.toJSON() ));
         return this;
     },
-    removeRequest: function () {
-        this.model.removeRequest();
+    removeUserBooks: function () {
+        this.model.removeUserBooks();
         this.remove();
     }
 });

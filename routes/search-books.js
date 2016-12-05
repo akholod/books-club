@@ -6,7 +6,7 @@ const express = require('express');
 const router = express.Router();
 const booksGoogle = require('google-books-search');
 
-router.post('/books/search', function(req, res) {
+router.post('/books/search', isLoggedIn, function(req, res) {
     let bookSearchOptions = {
         limit: 6,
         type: 'books',
@@ -28,6 +28,13 @@ router.post('/books/search', function(req, res) {
         res.json(results);
     });
 });
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/#login');
+}
 
 module.exports = router;
 

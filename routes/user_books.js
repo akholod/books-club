@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const BooksModel = new require('../models/book');
 
-router.get('/userbooks', function(req, res) {
+router.get('/userbooks', isLoggedIn, function(req, res) {
     BooksModel.find({owner: req.user.userId}, function (err, books) {
         if (err) {
             res.status(500).send("Database error");
@@ -16,7 +16,7 @@ router.get('/userbooks', function(req, res) {
     })
 });
 
-router.get('/userbooks/wishlist', function(req, res) {
+router.get('/userbooks/wishlist', isLoggedIn, function(req, res) {
 
     BooksModel.find({requestUser: req.user.local.email}, function (err, books) {
         if (err) {
@@ -30,7 +30,7 @@ router.get('/userbooks/wishlist', function(req, res) {
     })
 });
 
-router.put('/userbooks/wishlist/:book_id', function(req, res) {
+router.put('/userbooks/wishlist/:book_id', isLoggedIn, function(req, res) {
         if (req.params.book_id) {
             BooksModel.update({bookId: req.params.book_id}, {requestUser: ''},(err) => {
                 if (err) {
@@ -52,7 +52,13 @@ router.put('/userbooks/wishlist/:book_id', function(req, res) {
                 res.json(books);
             })
         }
-
 });
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/#login');
+}
 
 module.exports = router;
