@@ -9,7 +9,8 @@ var Router = Backbone.Router.extend({
         'login' : 'showLogin',
         'signup' : 'showSignup',
         'userProfile' : 'showUser',
-        'userBooks' : 'showUserBooks'
+        'userBooks' : 'showUserBooks',
+        'bookDescription/:bookId': 'bookDescription'
     },
     home: function () {
         $('#template').html('');
@@ -38,6 +39,13 @@ var Router = Backbone.Router.extend({
         userProfileView.render();
         new UserBooksView(UserBooks);
         new BookRequestsView(BookRequests);
+    },
+    bookDescription: function (bookId) {
+        $('#template').html('');
+        let descrBook = new Book();
+        descrBook.getBookDescription(bookId);
+        var bookDescription = new BookDescription({model: descrBook});
+        bookDescription.render();
     }
 
 });

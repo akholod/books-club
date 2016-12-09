@@ -5,7 +5,8 @@ let Book = Backbone.Model.extend({
         image: 'http://placehold.it/100x180',
         title: 'No title',
         authors: [],
-        owner: 'Unknown'
+        owner: 'Unknown',
+        requestUser: ''
     },
     initialize: function () {
         console.log('Init');
@@ -43,18 +44,34 @@ let Book = Backbone.Model.extend({
             url: "/api/books/" + this.get('bookId'),
             type: "DELETE",
             success: (data) => {
-                alert(data.message);
                 this.destroy();
             }
         })
     },
     removeRequest : function () {
         $.ajax({
-            url: "/api//userbooks/wishlist/" + this.get('bookId'),
+            url: "/api/userbooks/wishlist/" + this.get('bookId'),
             type: "PUT",
             success: (data) => {
                 alert('Запрос удален');
                 this.destroy();
+            }
+        })
+    },
+    getBookDescription: function (bookId) {
+        $.ajax({
+            url: "/api/books/" + bookId,
+            type: "GET",
+            success: (data) => {
+                this.set({
+                    'title': data.title,
+                    "language" : data.language,
+                    "image" : data.image,
+                    "authors" : data.authors,
+                    "pageCount" : data.pageCount,
+                    "description" : data.description
+                });
+
             }
         })
     }

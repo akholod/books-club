@@ -8,7 +8,7 @@ var BookRequestView = Backbone.View.extend({
     events: {
         'click .remove' : 'removeRequest'
     },
-    template: _.template( $('#userBooksTemp').html() ),
+    template: _.template( $('#requsestBooksTemp').html() ),
     initialize : function () {
         this.model.on('change', this.render, this);
         this.render();

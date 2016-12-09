@@ -20,7 +20,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/#">Каталог</a></li>
+                <li><a href="/#">Каталог</a></li>
                 <li><a href="/#userBooks">Добавить книгу</a></li>
                 <li><a href="/#userProfile">Мой профиль</a></li>
             </ul>
@@ -70,7 +70,7 @@
     <div class="row">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">Ваши книги</h3>
+                <h3 class="panel-title">Ваши книги для обмена</h3>
             </div>
             <div class="panel-body">
                 <div id="userBooks"></div>
@@ -111,6 +111,29 @@
 <script id="userBooksTemp" type="text/template">
     <img src="<%=image %>"/>
     <div class="remove glyphicon glyphicon-remove"></div>
+    <div class="request">
+         <p>Запрос обмена</p>
+        <span class="accept glyphicon glyphicon-ok"></span>
+    </div>
+    <div class="requestAuthor"><%= requestUser %></div>
+</script>
+
+<script id="requsestBooksTemp" type="text/template">
+    <img src="<%=image %>"/>
+    <div class="remove glyphicon glyphicon-remove"></div>
+</script>
+
+<script id="booksDescr" type="text/template">
+    <div class="media">
+        <div class="media-left">
+            <img class="media-object" src="<%= image %>" alt="">
+        </div>
+        <div class="media-body text-left">
+            <h3 class="media-heading"><%=title %></h3>
+            <h4 class="media-heading"><%=language %> стр. <%=pageCount %> </h4>
+            <p><%=description %></p>
+        </div>
+    </div>
 </script>
 
 <!--login template-->
@@ -212,6 +235,9 @@
 <script src="js/views/VSearchBooks.js"></script>
 <script src="js/views/VBookRequest.js"></script>
 <script src="js/views/VBookRequests.js"></script>
+<script src="js/views/VBookDescription.js"></script>
+
+
 <script src="js/routers/router.js"></script>
 
 <script src="js/app.js"></script>
