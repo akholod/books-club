@@ -1,9 +1,10 @@
 {
   "name": "books-club",
+  "main": "server.js",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "server.js"
+    "start": ""
   },
   "dependencies": {
     "bcrypt-nodejs": "latest",
