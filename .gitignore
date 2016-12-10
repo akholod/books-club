@@ -41,6 +41,7 @@ jspm_packages
 .idea/
 !public/bower_components/bootstrap/dist/fonts
 public/bower_components/
+/gnome
 
 
 
