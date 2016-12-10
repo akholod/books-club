@@ -39,8 +39,9 @@ jspm_packages
 .node_repl_history
 
 .idea/
-!public/bower_components/bootstrap/dist/fonts
 public/bower_components/
+!public/bower_components/bootstrap/dist/fonts
+
 /gnome
 
 
