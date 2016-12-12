@@ -5,10 +5,10 @@ body {
   font-size: 1.8rem;
   background-color: #333;
   color: #fff;
-  font-family: 'Roboto', sans-serif;
+  font-family: Roboto, Arial , sans-serif;
 }
 h1,h2,h3,p,a {
-  font-family: 'Lato', cursive ;
+  font-family: Lato, Arial ,sans-serif ;
 }
 a {
   color: #00B7FF;
@@ -21,7 +21,7 @@ a {
   position: absolute;
   left: 10%;
   cursor: pointer;
-  color: red;
+  color: #ff0e13;
 }
 
 .request {
@@ -50,7 +50,7 @@ a {
   font-size: 1.5rem;
   top: 80%;
   left: 10%;
-  color: orange;
+  color: #ffa809;
   display: none;
 }
 .grid:after {
