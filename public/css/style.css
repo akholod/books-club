@@ -1,14 +1,13 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
-@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=Lato|Roboto');
 
 body {
   font-size: 1.8rem;
   background-color: #333;
   color: #fff;
-  font-family: Roboto, Arial , sans-serif;
+  font-family: 'Roboto', Arial , sans-serif;
 }
 h1,h2,h3,p,a {
-  font-family: Lato, Arial ,sans-serif ;
+  font-family: 'Lato', Arial ,sans-serif ;
 }
 a {
   color: #00B7FF;
