@@ -1,0 +1,24 @@
+{
+  "name": "books-club",
+  "description": "",
+  "main": "server.js",
+  "authors": [
+    "akholod <andrey.kokhanevich@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/akholod/books-club",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-animate": "1.6.0",
+    "angular": "^1.6.0",
+    "animate.css": "^3.5.2",
+    "bootstrap": "^3.3.7"
+  }
+}

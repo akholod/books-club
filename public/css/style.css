@@ -14,11 +14,11 @@ a {
 }
 .item, .user-books {
   position: relative;
-  margin: 20px auto;
+  margin: 15px auto;
 }
 .trade, .remove {
   position: absolute;
-  left: 10%;
+  left: 5%;
   cursor: pointer;
   color: #ff0e13;
 }
@@ -57,12 +57,8 @@ a {
   display: block;
   clear: both;
 }
-
-.grid {
-  text-align: center;
-}
 .grid-item {
-  width: 160px;
+  width: 150px;
   height: 200px;
   float: left;
   border-radius: 5px;
@@ -82,4 +78,18 @@ a {
 }
 .search-lang {
   padding-top: 10px;
+}
+.form-control {
+  padding: 5px;
+  height: auto;
+  display: inline-block;
+}
+.search-field, .order-field {
+  display: inline-block;
+  margin: 5px 15px;
+  font-size: 2.2rem;
+}
+.search-field input, .order-field select {
+  color: #333;
+  font-size: 1.8rem;
 }
