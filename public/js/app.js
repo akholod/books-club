@@ -1,6 +1,6 @@
 'use strict';
 
-const app = angular.module('myApp', ['ngAnimate', 'ui.router', 'restangular']);
+const app = angular.module('myApp', ['restangular', 'ui.router', 'ngAnimate']);
 
 app.config(function($locationProvider, $stateProvider, $urlRouterProvider ) {
     $stateProvider
@@ -16,7 +16,7 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider ) {
 });
 
 
-app.service('BooksCatalog', ['Restangular', function(Restangular) {
+app.service('BooksCatalog', ['$http', function($http) {
     this.getBooks = function() {
         return $http({
             method: 'GET',
