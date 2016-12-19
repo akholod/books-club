@@ -13,8 +13,9 @@
         </select>
     </div>
 </div>
+
 <div ng-repeat="book in booksCtrl.books | filter : booksCtrl.searchBook | orderBy : booksCtrl.orderBook" class="item grid-item animate-repeat">
-    <img ng-src="{{book.image}}" class="">
+    <img ng-src="{{book.image}}" class="" ui-sref="book({bookId: book.bookId})" ui-sref-active="active">
     <div class="trade glyphicon glyphicon-retweet"></div>
 </div>
 

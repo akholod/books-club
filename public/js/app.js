@@ -1,29 +1,58 @@
 'use strict';
 
-const app = angular.module('myApp', ['ngAnimate']);
+const app = angular.module('myApp', ['ngAnimate', 'ui.router', 'restangular']);
 
-app.service('BooksCatalog', ['$http', function($http){
+app.config(function($locationProvider, $stateProvider, $urlRouterProvider ) {
+    $stateProvider
+        .state('books', {
+        url: '/books',
+        template: '<main-books-catalog></main-books-catalog>'
+        })
+        .state('book', {
+            url: '/books/:bookId',
+            template: '<book-card></book-card>'
+        });
+    $urlRouterProvider.otherwise('/books');
+});
+
+
+app.service('BooksCatalog', ['Restangular', function(Restangular) {
     this.getBooks = function() {
         return $http({
             method: 'GET',
-            url: '/api/books/'
+            url: '/api/books/',
         })
         .then((response) => {
             return response;
         }, (dataError) => {
             new Error((dataError));
+        });
+    };
+
+    this.getBook = function(bookId) {
+        return $http({
+            method: 'GET',
+            url: '/api/books/' + bookId,
         })
-    }
+            .then((response) => {
+                return response;
+            }, (dataError) => {
+                new Error((dataError));
+            });
+    };
 }]);
 
-app.controller('BooksCtrl',['BooksCatalog', function(BooksCatalog) {
-
+app.controller('BooksCtrl', ['BooksCatalog', function(BooksCatalog) {
     BooksCatalog.getBooks().then((response) => {
         this.books = response.data;
         console.log(this.books);
     });
+}]);
 
-
+app.controller('BookDescriptionCtrl', ['BooksCatalog', '$stateParams', function(BooksCatalog, $stateParams) {
+    BooksCatalog.getBook($stateParams.bookId).then((response) => {
+        this.book = response.data;
+    });
 }]);
 
 app.directive('mainBooksCatalog', function() {
@@ -37,3 +66,12 @@ app.directive('mainBooksCatalog', function() {
 });
 
 
+app.directive('bookCard', function() {
+    return {
+        restrict: 'E',
+        scope: {},
+        templateUrl: 'templates/book-card.html',
+        controller: 'BookDescriptionCtrl',
+        controllerAs: 'bookDescriptionCtrl',
+    };
+});
