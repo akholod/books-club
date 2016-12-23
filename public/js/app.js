@@ -2,7 +2,7 @@
 
 const app = angular.module('myApp', ['restangular', 'ui.router', 'ngAnimate']);
 
-app.config(function($locationProvider, $stateProvider, $urlRouterProvider ) {
+app.config(function($locationProvider, $stateProvider, $urlRouterProvider, RestangularProvider) {
     $stateProvider
         .state('books', {
         url: '/books',
@@ -13,27 +13,23 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider ) {
             template: '<book-card></book-card>'
         });
     $urlRouterProvider.otherwise('/books');
+
+    RestangularProvider.setBaseUrl("http://localhost:3000/api");
 });
 
 
-app.service('BooksCatalog', ['$http', function($http) {
+app.service('BooksCatalog', ['Restangular', function(Restangular) {
     this.getBooks = function() {
-        return $http({
-            method: 'GET',
-            url: '/api/books/',
-        })
-        .then((response) => {
-            return response;
-        }, (dataError) => {
-            new Error((dataError));
-        });
+        return Restangular.all('books').getList()
+            .then((response) => {
+                return response;
+            }, (dataError) => {
+                new Error((dataError));
+            });
     };
 
-    this.getBook = function(bookId) {
-        return $http({
-            method: 'GET',
-            url: '/api/books/' + bookId,
-        })
+   this.getBook = function(bookId) {
+        return Restangular.one('books', bookId).get()
             .then((response) => {
                 return response;
             }, (dataError) => {
@@ -42,16 +38,29 @@ app.service('BooksCatalog', ['$http', function($http) {
     };
 }]);
 
-app.controller('BooksCtrl', ['BooksCatalog', function(BooksCatalog) {
+app.service('BooksActions', ['Restangular', function(Restangular) {
+    this.createTradeRequest = function(bookId) {
+        return Restangular.one('books', bookId).put()
+            .then((response) => {
+                return response;
+            }, (dataError) => {
+                new Error((dataError));
+            });
+    };
+}]);
+
+app.controller('BooksCtrl', ['BooksCatalog', 'BooksActions', function(BooksCatalog, BooksActions) {
     BooksCatalog.getBooks().then((response) => {
-        this.books = response.data;
-        console.log(this.books);
+        this.books = response;
     });
+
+
+
 }]);
 
 app.controller('BookDescriptionCtrl', ['BooksCatalog', '$stateParams', function(BooksCatalog, $stateParams) {
     BooksCatalog.getBook($stateParams.bookId).then((response) => {
-        this.book = response.data;
+        this.book = response;
     });
 }]);
 
