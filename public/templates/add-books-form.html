@@ -1,0 +1,19 @@
+<h1>Введите название книги, которую хотите добавить</h1>
+<div class="row search-form">
+    <div class="col-sm-2 search-lang">
+        <input ng-model="addBooksCtrl.bookSearchLang" type="checkbox" name="bookLang" value="en"> EN
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-7">
+            <input type="text" name="searchField" placeholder="Введите название книги" class="form-control" ng-model="addBooksCtrl.bookSearchField"/>
+        </div>
+        <div class="col-sm-3 text-left">
+            <button id="searchBtn" ng-click="addBooksCtrl.searchBook()"  class="btn btn-success">Поиск</button>
+        </div>
+    </div>
+</div>
+<div id="searchResults"></div>
+<div ng-repeat="foundBook in addBooksCtrl.foundBooks" class="item grid-item animate-repeat">
+    <img ng-src="{{foundBook.image}}" class="img-responsive">
+</div>
