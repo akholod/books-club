@@ -1,7 +1,7 @@
 <h1>Введите название книги, которую хотите добавить</h1>
 <div class="row search-form">
     <div class="col-sm-2 search-lang">
-        <input ng-model="addBooksCtrl.bookSearchLang" type="checkbox" name="bookLang" value="en"> EN
+        <input ng-model="addBooksCtrl.bookSearchLang" type="checkbox" name="bookLang"> EN
     </div>
 
     <div class="form-group">
@@ -13,7 +13,7 @@
         </div>
     </div>
 </div>
-<div id="searchResults"></div>
+
 <div ng-repeat="foundBook in addBooksCtrl.foundBooks" class="item grid-item animate-repeat">
-    <img ng-src="{{foundBook.image}}" class="img-responsive">
+    <img ng-src="{{foundBook.thumbnail}}" class="img-responsive" class="item grid-item animate-repeat">
 </div>

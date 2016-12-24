@@ -76,7 +76,7 @@ app.service('BookSearch', ['$http', function($http) {
     }
 }]);
 
-app.service('addBookToUserBooks', ['Restangular', function(Restangular) {
+app.service('AddBookToUserBooks', ['Restangular', function(Restangular) {
     this.addBookToUserBooks = function(bookData) {
         return Restangular.one('books', bookId).put()
             .then((response) => {
@@ -84,6 +84,16 @@ app.service('addBookToUserBooks', ['Restangular', function(Restangular) {
             }, (dataError) => {
                 new Error((dataError));
             });
+    };
+}]);
+
+app.service('UserFormsValidator', ['', function() {
+    this.isEmailValid = function(email) {
+        
+    };
+
+    this.isPasswordValid = function(password) {
+
     };
 }]);
 
@@ -100,12 +110,30 @@ app.controller('BookDescriptionCtrl', ['BooksCatalog', '$stateParams', function(
 }]);
 
 app.controller('AddBooksCtrl', ['BookSearch', function(BookSearch) {
-    this.searchBook = function () {
-        BookSearch.findBooks(this.bookSearchField, this.bookSearchLang).then((response) => {
+    this.bookSearchLang = false;
 
-        });
+    this.searchBook = function () {
+        if (this.bookSearchField.length > 2) {
+            BookSearch.findBooks(this.bookSearchField, this.bookSearchLang).then((response) => {
+                this.foundBooks = response.data;
+            });
+        }
     };
 }]);
+
+app.controller('SignupCtrl', ['$http', 'UserFormsValidator', function($http, UserFormsValidator) {
+    
+}]);
+
+app.controller('LoginCtrl', ['$http', '', function($http) {
+    this.loginUser = function () {
+        $http.post('/login', {
+            "email": this.loginEmail,
+            "password": this.loginPassword,
+        })
+    }
+}]);
+
 
 
 

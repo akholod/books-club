@@ -65,7 +65,7 @@ module.exports = function(passport) {
             passReqToCallback : true
         },
         function(req, email, password, done) { // callback with email and password from our form
-                console.log(email + password)
+                console.log(email + password);
             //checking to see if the user trying to login already exists
             User.findOne({ 'local.email' :  email }, function(err, user) {
                 // if there are any errors, return the error before anything else

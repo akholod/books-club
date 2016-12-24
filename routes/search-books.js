@@ -13,7 +13,7 @@ router.post('/books/search', isLoggedIn, function(req, res) {
         lang: 'ru'
     };
 
-    if(req.body.bookLang == 'true') {
+    if(req.body.bookLang) {
         console.log(req.body.bookLang);
         bookSearchOptions.lang = 'en';
     }
