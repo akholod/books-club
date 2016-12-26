@@ -89,26 +89,71 @@ app.service('BookSearch', ['$http', function($http) {
 
 app.service('UserFormsValidator', ['', function() {
     this.isEmailValid = function(email) {
-        
+        let regexp = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+        if (!regexp.test(email)) {
+            return 'Invalid email';
+        }
     };
 
     this.isPasswordValid = function(password) {
-
+        let regexp = /^[a-z0-9_-]{6,18}$/;
+        if (!regexp.test(password)) {
+            return 'Invalid password';
+        }
     };
+
+    this.isUsernameValid = function(username) {
+        let regexp = /^[a-z0-9_-]{3,16}$/;
+        if (!regexp.test(username)) {
+            return 'Invalid username';
+        }
+    };
+
+    this.isPasswordConfirm = function (password, confirmPassword) {
+        if (password !== confirmPassword) {
+            return 'Invalid confirm password'
+        }
+    }
 }]);
 
-app.service('UserHandler', ['', function() {
-    this.isEmailValid = function(email) {
-
+app.service('UserHandler', ['$http', function($http) {
+    this.loginUser = function(loginData) {
+        return $http.post('/login', {
+            "email": loginData.email,
+            "password": loginData.password,
+        }).then((response) => {
+            return response;
+        }, (dataError) => {
+            new Error((dataError));
+        });
     };
 
-    this.isPasswordValid = function(password) {
-
+    this.signupUser = function(signupData) {
+        return $http.post('/signup', {
+            "email": signupData.email,
+            "password": signupData.password,
+            "name": signupData.name,
+            "city": signupData.city,
+        }).then((response) => {
+            return response;
+        }, (dataError) => {
+            new Error((dataError));
+        });
     };
+    
+    this.logoutUser = function () {
+        return $http.get('/logout').then((response) => {
+            return response;
+        }, (dataError) => {
+            new Error((dataError));
+        });
+    }
+
+
 }]);
 
 
-app.controller('BooksCtrl', ['BooksCatalog', 'BooksActions', function(BooksCatalog, BooksActions) {
+app.controller('BooksCtrl', ['BooksCatalog', function(BooksCatalog) {
     BooksCatalog.getBooks().then((response) => {
         this.books = response;
     });
@@ -132,19 +177,42 @@ app.controller('AddBooksCtrl', ['BookSearch', function(BookSearch) {
     };
 }]);
 
-app.controller('SignupCtrl', ['$http', 'UserFormsValidator', function($http, UserFormsValidator) {
-    
+app.controller('SignupCtrl', ['$rootScope', '$state', 'UserHandler', 'UserFormsValidator', function($rootScope, $state, UserHandler, UserFormsValidator) {
+
+    this.signup = function () {
+        let isInvalid = UserFormsValidator.isEmailValid(this.signupData.email);
+        if(isInvalid) {
+            return this.signupFailureMessage = isInvalid;
+        }
+        isInvalid = UserFormsValidator.isPasswordValid(this.signupData.password);
+        if(isInvalid) {
+            return this.signupFailureMessage = isInvalid;
+        }
+        isInvalid = UserFormsValidator.isUsernameValid(this.signupData.name);
+        if(isInvalid) {
+            return this.signupFailureMessage = isInvalid;
+        }
+        isInvalid = UserFormsValidator.isPasswordConfirm(this.signupData.password, this.signupData.confirmPassword);
+        if(isInvalid) {
+            return this.signupFailureMessage = isInvalid;
+        }
+
+        UserHandler.signupUser(this.signupData).then((response) => {
+            $rootScope.currentUser = response.data;
+            $state.go("books");
+            console.log(response.data);
+        });
+    }
 }]);
 
-app.controller('LoginCtrl', ['$http', function($http) {
-    this.loginUser = function () {
-        console.log('hut piada')
-        $http.post('/login', {
-            "email": this.loginEmail,
-            "password": this.loginPassword,
-        }).then((data => {
-            console.log(data);
-        }))
+app.controller('LoginCtrl', ['$rootScope', '$state', 'UserHandler', function($rootScope, $state, UserHandler) {
+
+    this.login = function () {
+        UserHandler.loginUser(this.loginData).then((response) => {
+            console.log(response.data);
+            $rootScope.currentUser = response.data;
+            $state.go("books");
+        });
     }
 }]);
 
@@ -204,7 +272,7 @@ app.directive('currentUser', function() {
     return {
         restrict: 'E',
         scope: {},
-        template: '<div>{{2+2}}</div>',
+        templateUrl: 'templates/current-user.html',
         controller: 'CurrentUserCtrl',
         controllerAs: 'currentUserCtrl',
     };

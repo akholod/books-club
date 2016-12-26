@@ -3,18 +3,18 @@
     <div class="form-group">
         <label for="inputEmail" class="col-sm-3 control-label">Email</label>
         <div class="col-sm-9">
-            <input id="inputEmail" type="email" name="email" placeholder="Email" class="form-control" ng-model="loginCtrl.loginEmail"/>
+            <input id="inputEmail" type="email" name="email" placeholder="Email" class="form-control" ng-model="loginCtrl.loginData.email"/>
         </div>
     </div>
     <div class="form-group">
         <label for="inputPassword" class="col-sm-3 control-label">Password</label>
         <div class="col-sm-9">
-            <input id="inputPassword" type="password" name="password" placeholder="Password" class="form-control" ng-model="loginCtrl.loginPassword"/>
+            <input id="inputPassword" type="password" name="password" placeholder="Password" class="form-control" ng-model="loginCtrl.loginData.password"/>
         </div>
     </div>
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-9 text-left">
-            <button ng-click="loginCtrl.loginUser()" class="btn btn-success">Log In</button>
+            <button ng-click="loginCtrl.login()" class="btn btn-success">Log In</button>
         </div>
     </div>
 </div>
