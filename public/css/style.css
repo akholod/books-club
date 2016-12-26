@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Lato|Roboto');
 
 body {
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   background-color: #333;
   color: #fff;
   font-family: 'Roboto', Arial , sans-serif;
@@ -80,18 +80,21 @@ a {
   padding-top: 10px;
 }
 .form-control {
-  padding: 5px;
-  height: auto;
+  padding: 10px;
+  height: 43px;
   display: inline-block;
 }
 .search-field, .order-field {
   display: inline-block;
-  margin: 5px 15px;
-  font-size: 2.2rem;
+  margin: 5px 20px;
+  font-size: 2.1rem;
 }
 .search-field input, .order-field select {
   color: #333;
   font-size: 1.8rem;
+  border: 0;
+  padding: 7px 10px;
+  margin: 5px;
 }
 .loader {
   margin: calc(50% - 350px) auto;
@@ -107,4 +110,6 @@ a {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
+.active {
+  background: #9954BB;
+}

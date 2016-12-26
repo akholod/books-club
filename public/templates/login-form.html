@@ -1,15 +1,15 @@
 <h1 class="text-center">Log In page</h1>
-<form action="/login" name="login" method="post" class="form-horizontal">
+<div class="form-horizontal">
     <div class="form-group">
         <label for="inputEmail" class="col-sm-3 control-label">Email</label>
         <div class="col-sm-9">
-            <input id="inputEmail" type="email" name="email" placeholder="Email" class="form-control" ng-model="loginCtrl.email"/>
+            <input id="inputEmail" type="email" name="email" placeholder="Email" class="form-control" ng-model="loginCtrl.loginEmail"/>
         </div>
     </div>
     <div class="form-group">
         <label for="inputPassword" class="col-sm-3 control-label">Password</label>
         <div class="col-sm-9">
-            <input id="inputPassword" type="password" name="password" placeholder="Password" class="form-control" ng-model="loginCtrl.password"/>
+            <input id="inputPassword" type="password" name="password" placeholder="Password" class="form-control" ng-model="loginCtrl.loginPassword"/>
         </div>
     </div>
     <div class="form-group">
@@ -17,5 +17,4 @@
             <button ng-click="loginCtrl.loginUser()" class="btn btn-success">Log In</button>
         </div>
     </div>
-</form>
-<h3 class="text-center">Нет аккаунта?<a ui-sref="signup"> Регестрируйтесь здесь!</a></h3>
+</div>

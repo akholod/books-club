@@ -76,7 +76,7 @@ app.service('BookSearch', ['$http', function($http) {
     }
 }]);
 
-app.service('AddBookToUserBooks', ['Restangular', function(Restangular) {
+/*app.service('AddBookToUserBooks', ['Restangular', function(Restangular) {
     this.addBookToUserBooks = function(bookData) {
         return Restangular.one('books', bookId).put()
             .then((response) => {
@@ -85,7 +85,7 @@ app.service('AddBookToUserBooks', ['Restangular', function(Restangular) {
                 new Error((dataError));
             });
     };
-}]);
+}]);*/
 
 app.service('UserFormsValidator', ['', function() {
     this.isEmailValid = function(email) {
@@ -96,6 +96,17 @@ app.service('UserFormsValidator', ['', function() {
 
     };
 }]);
+
+app.service('UserHandler', ['', function() {
+    this.isEmailValid = function(email) {
+
+    };
+
+    this.isPasswordValid = function(password) {
+
+    };
+}]);
+
 
 app.controller('BooksCtrl', ['BooksCatalog', 'BooksActions', function(BooksCatalog, BooksActions) {
     BooksCatalog.getBooks().then((response) => {
@@ -125,12 +136,15 @@ app.controller('SignupCtrl', ['$http', 'UserFormsValidator', function($http, Use
     
 }]);
 
-app.controller('LoginCtrl', ['$http', '', function($http) {
+app.controller('LoginCtrl', ['$http', function($http) {
     this.loginUser = function () {
+        console.log('hut piada')
         $http.post('/login', {
             "email": this.loginEmail,
             "password": this.loginPassword,
-        })
+        }).then((data => {
+            console.log(data);
+        }))
     }
 }]);
 
@@ -176,6 +190,7 @@ app.directive('signupForm', function() {
         controllerAs: 'signupCtrl',
     };
 });
+
 app.directive('loginForm', function() {
     return {
         restrict: 'E',
@@ -185,3 +200,13 @@ app.directive('loginForm', function() {
         controllerAs: 'loginCtrl',
     };
 });
+app.directive('currentUser', function() {
+    return {
+        restrict: 'E',
+        scope: {},
+        template: '<div>{{2+2}}</div>',
+        controller: 'CurrentUserCtrl',
+        controllerAs: 'currentUserCtrl',
+    };
+});
+

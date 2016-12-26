@@ -4,9 +4,9 @@ const router = express.Router();
 const passport = require('passport');
 
 router.post('/', passport.authenticate('local-signup', {
-    successRedirect : '/#',
-    failureRedirect : '/#signup',
     failureFlash : true
-}));
+}), function (req, res) {
+    res.json(req.user);
+});
 
 module.exports = router;
