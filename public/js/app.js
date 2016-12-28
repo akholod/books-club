@@ -30,7 +30,12 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider, Resta
     RestangularProvider.setBaseUrl("http://localhost:3000/api");
 });
 
-
+app.run(function ($rootScope) {
+    $rootScope.user = {
+        userId: sessionStorage.getItem('userId'),
+        userEmail: sessionStorage.getItem('userEmail'),
+    }
+});
 app.service('BooksCatalog', ['Restangular', function(Restangular) {
     this.getBooks = function() {
         return Restangular.all('books').getList()
@@ -116,12 +121,13 @@ app.service('UserFormsValidator', ['', function() {
     }
 }]);
 
-app.service('UserHandler', ['$http', function($http) {
+app.service('UserHandler', ['$http', 'Session', function($http, Session) {
     this.loginUser = function(loginData) {
         return $http.post('/login', {
             "email": loginData.email,
             "password": loginData.password,
         }).then((response) => {
+            Session.create(response.data.userId, 'user', response.data.local.email);
             return response;
         }, (dataError) => {
             new Error((dataError));
@@ -135,6 +141,7 @@ app.service('UserHandler', ['$http', function($http) {
             "name": signupData.name,
             "city": signupData.city,
         }).then((response) => {
+            Session.create(response.data.userId, 'user', response.data.local.email);
             return response;
         }, (dataError) => {
             new Error((dataError));
@@ -143,15 +150,36 @@ app.service('UserHandler', ['$http', function($http) {
     
     this.logoutUser = function () {
         return $http.get('/logout').then((response) => {
+            Session.destroy();
             return response;
         }, (dataError) => {
             new Error((dataError));
         });
-    }
-
+    };
 
 }]);
 
+app.service('Session', function () {
+    this.create = function (userId, userRole, userEmail) {
+        sessionStorage.setItem('userId', userId);
+        sessionStorage.setItem('userEmail', userEmail);
+        sessionStorage.setItem('userRole', userRole);
+    };
+    this.destroy = function () {
+        sessionStorage.setItem('userId', '');
+        sessionStorage.setItem('userEmail', '');
+        sessionStorage.setItem('userRole', '');
+    };
+});
+
+app.factory('currentUserFact', function () {
+    return {
+        user: {
+            userId: '',
+            userEmail: '',
+        }
+    }
+});
 
 app.controller('BooksCtrl', ['BooksCatalog', function(BooksCatalog) {
     BooksCatalog.getBooks().then((response) => {
@@ -177,7 +205,7 @@ app.controller('AddBooksCtrl', ['BookSearch', function(BookSearch) {
     };
 }]);
 
-app.controller('SignupCtrl', ['$rootScope', '$state', 'UserHandler', 'UserFormsValidator', function($rootScope, $state, UserHandler, UserFormsValidator) {
+app.controller('SignupCtrl', ['$state', 'UserHandler', 'UserFormsValidator', function( $state, UserHandler, UserFormsValidator) {
 
     this.signup = function () {
         let isInvalid = UserFormsValidator.isEmailValid(this.signupData.email);
@@ -205,17 +233,35 @@ app.controller('SignupCtrl', ['$rootScope', '$state', 'UserHandler', 'UserFormsV
     }
 }]);
 
-app.controller('LoginCtrl', ['$rootScope', '$state', 'UserHandler', function($rootScope, $state, UserHandler) {
-
+app.controller('LoginCtrl', ['$state', '$scope', 'UserHandler', 'currentUserFact', function($state, $scope, UserHandler, currentUserFact) {
+    $scope.user = currentUserFact;
     this.login = function () {
         UserHandler.loginUser(this.loginData).then((response) => {
-            console.log(response.data);
-            $rootScope.currentUser = response.data;
-            $state.go("books");
+            if(response.data.userId) {
+                $scope.user.userEmail = response.data.local.email;
+                $scope.user.userId = response.data.userId;
+                $state.go("books");
+            }
         });
     }
 }]);
 
+
+app.controller('CurrentUserCtrl', ['$state', '$rootScope', '$scope', 'UserHandler', 'currentUserFact', function($state, $rootScope, $scope, UserHandler, currentUserFact) {
+
+    $scope.user = currentUserFact;
+    if(!$scope.user.userEmail) {
+        console.log($scope.user.userEmail);
+        $scope.user = $rootScope.user;
+    }
+
+    this.logoutCurrentUser = function () {
+        UserHandler.logoutUser().then((response) => {
+            $scope.user = '';
+            $state.go("books");
+        });
+    }
+}]);
 
 
 
