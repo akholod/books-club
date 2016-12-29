@@ -11,6 +11,7 @@ h1,h2,h3,p,a {
 }
 a {
   color: #00B7FF;
+  cursor: pointer;
 }
 .item, .user-books {
   position: relative;

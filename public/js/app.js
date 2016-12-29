@@ -23,24 +23,19 @@ app.config(function($httpProvider, $stateProvider, $urlRouterProvider, Restangul
         .state('searchbook', {
             url: '/searchbook',
             template: '<add-books-form></add-books-form>',
-            resolve: {
-                auth: function ($q, $state, $rootScope, $timeout) {
-                    var deferred = $q.defer();
-
-                    if (!$rootScope.user.userEmail) {
-                        $timeout(function() {
-                            deferred.reject();
-                            alert('Not authorized');
-                            $state.go('login')
-                        });
-                        return deferred.promise
-                    }
-
-
-                }
-            }
-
+            resolve: { authenticate: authenticate },
         });
+
+    function authenticate($q, $state, $timeout) {
+        if (sessionStorage.getItem('userEmail')) {
+            return $q.when()
+        } else {
+            $timeout(function () {
+                alert('Not authorized');
+                $state.go('login')
+            });
+        }
+    }
 
     $httpProvider.interceptors.push('AuthUser');
 
@@ -59,6 +54,7 @@ app.service('AuthUser',  function ($q, $rootScope, $injector) {
     };
     this.responseError = (rejection) => {
         if(rejection.status === 401) {
+            alert('Not authorized');
             $injector.get('$state').go('login');
         }
         return $q.reject(rejection);
