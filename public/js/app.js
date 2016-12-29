@@ -2,7 +2,7 @@
 
 const app = angular.module('myApp', ['restangular', 'ui.router', 'ngAnimate']);
 
-app.config(function($locationProvider, $stateProvider, $urlRouterProvider, RestangularProvider) {
+app.config(function($httpProvider, $stateProvider, $urlRouterProvider, RestangularProvider) {
     $stateProvider
         .state('books', {
         url: '/books',
@@ -22,20 +22,49 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider, Resta
         })
         .state('searchbook', {
             url: '/searchbook',
-            template: '<add-books-form></add-books-form>'
+            template: '<add-books-form></add-books-form>',
+            resolve: {
+                auth: function ($q, $state, $rootScope, $timeout) {
+                    var deferred = $q.defer();
+
+                    if (!$rootScope.user.userEmail) {
+                        $timeout(function() {
+                            deferred.reject();
+                            alert('Not authorized');
+                            $state.go('login')
+                        });
+                        return deferred.promise
+                    }
+
+
+                }
+            }
+
         });
+
+    $httpProvider.interceptors.push('AuthUser');
 
     $urlRouterProvider.otherwise('/books');
 
     RestangularProvider.setBaseUrl("http://localhost:3000/api");
 });
 
-app.run(function ($rootScope) {
-    $rootScope.user = {
-        userId: sessionStorage.getItem('userId'),
-        userEmail: sessionStorage.getItem('userEmail'),
+app.service('AuthUser',  function ($q, $rootScope, $injector) {
+    this.response = (data) => {
+        $rootScope.user = {
+            userId: sessionStorage.getItem('userId'),
+            userEmail: sessionStorage.getItem('userEmail'),
+        };
+        return $q.resolve(data);
+    };
+    this.responseError = (rejection) => {
+        if(rejection.status === 401) {
+            $injector.get('$state').go('login');
+        }
+        return $q.reject(rejection);
     }
 });
+
 app.service('BooksCatalog', ['Restangular', function(Restangular) {
     this.getBooks = function() {
         return Restangular.all('books').getList()
@@ -250,14 +279,14 @@ app.controller('LoginCtrl', ['$state', '$scope', 'UserHandler', 'currentUserFact
 app.controller('CurrentUserCtrl', ['$state', '$rootScope', '$scope', 'UserHandler', 'currentUserFact', function($state, $rootScope, $scope, UserHandler, currentUserFact) {
 
     $scope.user = currentUserFact;
-    if(!$scope.user.userEmail) {
-        console.log($scope.user.userEmail);
-        $scope.user = $rootScope.user;
-    }
+    $scope.userSession = $rootScope.user;
 
     this.logoutCurrentUser = function () {
         UserHandler.logoutUser().then((response) => {
-            $scope.user = '';
+            $scope.user.userEmail = '';
+            $scope.user.userId = '';
+            $scope.userSession.userEmail = '';
+            $scope.userSession.userId = '';
             $state.go("books");
         });
     }
