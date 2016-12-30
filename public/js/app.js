@@ -31,9 +31,10 @@ app.config(function($httpProvider, $stateProvider, $urlRouterProvider, Restangul
             return $q.when()
         } else {
             $timeout(function () {
-                alert('Not authorized');
-                $state.go('login')
+                alert('Not authorized!');
+                $state.go('login');
             });
+
         }
     }
 
@@ -117,7 +118,7 @@ app.service('BookSearch', ['$http', function($http) {
     };
 }]);*/
 
-app.service('UserFormsValidator', ['', function() {
+app.service('UserFormsValidator', function() {
     this.isEmailValid = function(email) {
         let regexp = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
         if (!regexp.test(email)) {
@@ -133,7 +134,7 @@ app.service('UserFormsValidator', ['', function() {
     };
 
     this.isUsernameValid = function(username) {
-        let regexp = /^[a-z0-9_-]{3,16}$/;
+        let regexp = /^[a-zA-Z0-9_-]{3,16}$/;
         if (!regexp.test(username)) {
             return 'Invalid username';
         }
@@ -144,7 +145,7 @@ app.service('UserFormsValidator', ['', function() {
             return 'Invalid confirm password'
         }
     }
-}]);
+});
 
 app.service('UserHandler', ['$http', 'Session', function($http, Session) {
     this.loginUser = function(loginData) {
@@ -230,8 +231,12 @@ app.controller('AddBooksCtrl', ['BookSearch', function(BookSearch) {
     };
 }]);
 
-app.controller('SignupCtrl', ['$state', 'UserHandler', 'UserFormsValidator', function( $state, UserHandler, UserFormsValidator) {
+app.controller('SignupCtrl', ['$state', '$scope', 'UserHandler', 'UserFormsValidator', 'currentUserFact', function( $state, $scope, UserHandler, UserFormsValidator, currentUserFact) {
+    $scope.user = currentUserFact;
 
+    this.closeAlert = function () {
+        this.signupFailureMessage = '';
+    };
     this.signup = function () {
         let isInvalid = UserFormsValidator.isEmailValid(this.signupData.email);
         if(isInvalid) {
@@ -251,9 +256,13 @@ app.controller('SignupCtrl', ['$state', 'UserHandler', 'UserFormsValidator', fun
         }
 
         UserHandler.signupUser(this.signupData).then((response) => {
-            $rootScope.currentUser = response.data;
+            console.log('askdjashdkhabkjd');
+            $scope.user.userEmail = response.data.local.email;
+            $scope.user.userId = response.data.userId;
+            console.log('Check');
             $state.go("books");
-            console.log(response.data);
+            this.signupFailureMessage = '';
+
         });
     }
 }]);

@@ -114,3 +114,12 @@ a {
 .active {
   background: #9954BB;
 }
+.alert {
+  padding: 7px 10px;
+}
+.form-horizontal {
+  margin-top: 50px;
+}
+.form-group {
+  margin: 25px 0;
+}
