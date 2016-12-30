@@ -1,6 +1,6 @@
 'use strict';
 
-const app = angular.module('myApp', ['restangular', 'ui.router', 'ngAnimate']);
+const app = angular.module('myApp', ['restangular', 'ui.router', 'ngAnimate', 'ui.bootstrap']);
 
 app.config(function($httpProvider, $stateProvider, $urlRouterProvider, RestangularProvider) {
     $stateProvider
@@ -24,7 +24,12 @@ app.config(function($httpProvider, $stateProvider, $urlRouterProvider, Restangul
             url: '/searchbook',
             template: '<add-books-form></add-books-form>',
             resolve: { authenticate: authenticate },
-        });
+        })
+        .state('userprofile', {
+        url: '/userprofile',
+        template: '<user-profile></user-profile>',
+        resolve: { authenticate: authenticate },
+    });
 
     function authenticate($q, $state, $timeout) {
         if (sessionStorage.getItem('userEmail')) {
@@ -45,7 +50,7 @@ app.config(function($httpProvider, $stateProvider, $urlRouterProvider, Restangul
     RestangularProvider.setBaseUrl("http://localhost:3000/api");
 });
 
-app.service('AuthUser',  function ($q, $rootScope, $injector) {
+app.service('AuthUser',  function ($q, $rootScope, $injector, $location) {
     this.response = (data) => {
         $rootScope.user = {
             userId: sessionStorage.getItem('userId'),
@@ -55,7 +60,12 @@ app.service('AuthUser',  function ($q, $rootScope, $injector) {
     };
     this.responseError = (rejection) => {
         if(rejection.status === 401) {
-            alert('Not authorized');
+            if($location.path().indexOf('login') !== -1) {
+                alert('Wrong login or password ');
+            } else {
+                alert('Not authorized');
+            }
+
             $injector.get('$state').go('login');
         }
         return $q.reject(rejection);
@@ -153,7 +163,7 @@ app.service('UserHandler', ['$http', 'Session', function($http, Session) {
             "email": loginData.email,
             "password": loginData.password,
         }).then((response) => {
-            Session.create(response.data.userId, 'user', response.data.local.email);
+            Session.create(response.data.userId, response.data.local.email, response.data.name, response.data.city);
             return response;
         }, (dataError) => {
             new Error((dataError));
@@ -167,7 +177,7 @@ app.service('UserHandler', ['$http', 'Session', function($http, Session) {
             "name": signupData.name,
             "city": signupData.city,
         }).then((response) => {
-            Session.create(response.data.userId, 'user', response.data.local.email);
+            Session.create(response.data.userId, response.data.local.email, response.data.name, response.data.local.city);
             return response;
         }, (dataError) => {
             new Error((dataError));
@@ -182,21 +192,47 @@ app.service('UserHandler', ['$http', 'Session', function($http, Session) {
             new Error((dataError));
         });
     };
-
 }]);
 
 app.service('Session', function () {
-    this.create = function (userId, userRole, userEmail) {
+    this.create = function (userId, userEmail, userName, userCity) {
         sessionStorage.setItem('userId', userId);
         sessionStorage.setItem('userEmail', userEmail);
-        sessionStorage.setItem('userRole', userRole);
+        sessionStorage.setItem('userName', userName);
+        sessionStorage.setItem('userCity', userCity);
+
     };
     this.destroy = function () {
         sessionStorage.setItem('userId', '');
         sessionStorage.setItem('userEmail', '');
+        sessionStorage.setItem('userName', '');
+        sessionStorage.setItem('userCity', '');
         sessionStorage.setItem('userRole', '');
     };
 });
+
+app.service('UserProfileHandler', ['Restangular', '$http',function (Restangular, $http) {
+    this.getOutcomingRequests = function () {
+        return Restangular.all('/userbooks/wishlist').getList()
+            .then((response) => {
+                console.log(response)
+                return response;
+            }, (dataError) => {
+                new Error((dataError));
+            });
+    };
+
+    this.getUserBooks = function () {
+        return Restangular.all('/userbooks').getList()
+            .then((response) => {
+                console.log(response)
+                return response;
+            }, (dataError) => {
+                new Error((dataError));
+            });
+    }
+}]);
+
 
 app.factory('currentUserFact', function () {
     return {
@@ -297,6 +333,24 @@ app.controller('CurrentUserCtrl', ['$state', '$rootScope', '$scope', 'UserHandle
     }
 }]);
 
+app.controller('UserProfileCtrl', ['UserProfileHandler', '$http', function (UserProfileHandler, $http) {
+    UserProfileHandler.getOutcomingRequests().then((response) => {
+        this.outcomingRequests = response;
+        console.log(this.outcomingRequests)
+    });
+
+    UserProfileHandler.getUserBooks().then((response) => {
+        this.userBooks = response;
+        console.log(this.userBooks)
+    });
+
+    this.userData = {
+        'email': sessionStorage.getItem('userEmail'),
+        'name':sessionStorage.getItem('userName'),
+        'city':sessionStorage.getItem('userCity'),
+    }
+}]);
+
 
 
 app.directive('mainBooksCatalog', function() {
@@ -358,3 +412,31 @@ app.directive('currentUser', function() {
     };
 });
 
+app.directive('userProfile', function () {
+   return {
+       restrict: 'E',
+       scope: {},
+       templateUrl: 'templates/user-profile.html',
+       controller: 'UserProfileCtrl',
+       controllerAs: 'userProfileCtrl',
+   }
+});
+
+/*
+app.controller('showModalCtrl', function ($modal) {
+    this.open = function () {
+        console.log('opening pop up');
+        let modalInstance = $modal.open({
+            templateUrl: 'templates/modal-template.html',
+            controller: 'ModalAppCtrl',
+            controllerAs: 'modalAppCtrl'
+        });
+    }
+});
+
+app.controller('ModalAppCtrl', function ($modalInstance) {
+    this.title = "alarma!";
+    this.close = function () {
+        $modalInstance.dismiss('cancel');
+    };
+});*/

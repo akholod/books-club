@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-sm-4">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Профиль пользователя</h3>
+            </div>
+            <div class="panel-body text-center">
+                <h3>Имя - {{userProfileCtrl.userData.name}}</h3>
+                <p>Email - {{userProfileCtrl.userData.email}} </p>
+                <p>City - {{userProfileCtrl.userData.city}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Исходящие запросы</h3>
+            </div>
+            <div class="panel-body">
+                <div ng-repeat="requestBook in userProfileCtrl.outcomingRequests" class="item grid-item animate-repeat">
+                    <img ng-src="{{requestBook.image}}" class="img-responsive" class="item grid-item animate-repeat">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Ваши книги для обмена</h3>
+        </div>
+        <div class="panel-body">
+            <div ng-repeat="userBook in userProfileCtrl.userBooks" class="item grid-item animate-repeat">
+                <img ng-src="{{userBook.image}}" class="img-responsive" class="item grid-item animate-repeat">
+            </div>
+        </div>
+    </div>
+</div>
