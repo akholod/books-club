@@ -51,6 +51,7 @@ app.config(function($httpProvider, $stateProvider, $urlRouterProvider, Restangul
 });
 
 app.service('AuthUser',  function ($q, $rootScope, $injector, $location) {
+    var alertActive = false;
     this.response = (data) => {
         $rootScope.user = {
             userId: sessionStorage.getItem('userId'),
@@ -59,15 +60,16 @@ app.service('AuthUser',  function ($q, $rootScope, $injector, $location) {
         return $q.resolve(data);
     };
     this.responseError = (rejection) => {
-        if(rejection.status === 401) {
+        if(rejection.status === 401 && !alertActive) {
             if($location.path().indexOf('login') !== -1) {
                 alert('Wrong login or password ');
             } else {
                 alert('Not authorized');
             }
-
+            alertActive = true;
             $injector.get('$state').go('login');
         }
+
         return $q.reject(rejection);
     }
 });
