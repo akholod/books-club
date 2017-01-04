@@ -14,5 +14,5 @@
 </form>
 
 <div ng-repeat="foundBook in addBooksCtrl.foundBooks" class="item grid-item animate-repeat">
-    <img ng-src="{{foundBook.thumbnail}}" class="img-responsive" class="item grid-item animate-repeat">
+    <img ng-src="{{foundBook.thumbnail}}" class="img-responsive" class="item grid-item animate-repeat" ng-click="addBooksCtrl.addToUserBooks(foundBook)">
 </div>

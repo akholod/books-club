@@ -118,7 +118,7 @@ app.service('BooksCatalog', ['Restangular', function(Restangular) {
     };
 }]);
 
-app.service('BooksActions', ['Restangular', function(Restangular) {
+app.service('BooksActions', ['$state', 'Restangular', 'ModalWindow', function($state, Restangular, ModalWindow) {
     this.createTradeRequest = function(bookId) {
         return Restangular.one('books', bookId).put()
             .then((response) => {
@@ -127,6 +127,23 @@ app.service('BooksActions', ['Restangular', function(Restangular) {
                 new Error((dataError));
             });
     };
+    this.addToUsersBooks = function (book) {
+        return Restangular.all('books').post({
+            title: book.title,
+            language: book.language,
+            image: book.thumbnail,
+            authors: book.authors,
+            pageCount: book.pageCount,
+            description: book.description,
+        }).then((response) => {
+            console.log(response);
+            ModalWindow.openModalWindow(response.message, 'Success!');
+            $state.go('books');
+            return response;
+        }, (dataError) => {
+            new Error((dataError));
+        });
+    }
 }]);
 
 app.service('BookSearch', ['$http', function($http) {
@@ -135,7 +152,6 @@ app.service('BookSearch', ['$http', function($http) {
             "bookTitle" : searchBookTitle,
             "bookLang" : searchBookLang,
         }).then((response) => {
-            console.log(response)
             return response;
         }, (dataError) => {
             new Error((dataError));
@@ -143,16 +159,6 @@ app.service('BookSearch', ['$http', function($http) {
     }
 }]);
 
-/*app.service('AddBookToUserBooks', ['Restangular', function(Restangular) {
-    this.addBookToUserBooks = function(bookData) {
-        return Restangular.one('books', bookId).put()
-            .then((response) => {
-                return response;
-            }, (dataError) => {
-                new Error((dataError));
-            });
-    };
-}]);*/
 
 app.service('UserFormsValidator', function() {
     this.isEmailValid = function(email) {
@@ -243,7 +249,6 @@ app.service('UserProfileHandler', ['Restangular', '$http',function (Restangular,
     this.getOutcomingRequests = function () {
         return Restangular.all('/userbooks/wishlist').getList()
             .then((response) => {
-                console.log(response)
                 return response;
             }, (dataError) => {
                 new Error((dataError));
@@ -253,7 +258,6 @@ app.service('UserProfileHandler', ['Restangular', '$http',function (Restangular,
     this.getUserBooks = function () {
         return Restangular.all('/userbooks').getList()
             .then((response) => {
-                console.log(response)
                 return response;
             }, (dataError) => {
                 new Error((dataError));
@@ -283,16 +287,23 @@ app.controller('BookDescriptionCtrl', ['BooksCatalog', '$stateParams', function(
     });
 }]);
 
-app.controller('AddBooksCtrl', ['BookSearch', function(BookSearch) {
+app.controller('AddBooksCtrl', ['BookSearch', 'BooksActions', function(BookSearch, BooksActions) {
     this.bookSearchLang = false;
 
     this.searchBook = function () {
         if (this.bookSearchField.length > 2) {
             BookSearch.findBooks(this.bookSearchField, this.bookSearchLang).then((response) => {
+                console.log(response.data);
                 this.foundBooks = response.data;
             });
         }
     };
+
+    this.addToUserBooks = function(foundBook) {
+        BooksActions.addToUsersBooks(foundBook).then((response) => {
+            console.log(response);
+        });
+    }
 }]);
 
 app.controller('SignupCtrl', ['$state', '$scope','UserHandler', 'UserFormsValidator', 'currentUserFact', function( $state, $scope, UserHandler, UserFormsValidator, currentUserFact) {
@@ -345,9 +356,6 @@ app.controller('LoginCtrl', ['$state', '$scope', 'UserHandler', 'currentUserFact
     this.open = function () {
         ModalWindow.openModalWindow('Huy pizda i jigga');
     };
-
-
-
 }]);
 
 
@@ -385,7 +393,18 @@ app.controller('UserProfileCtrl', ['UserProfileHandler', '$http', function (User
     }
 }]);
 
+app.controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
+    var $ctrl = this;
+    $ctrl.headMessage = items.headMessage;
+    $ctrl.bodyMessage = items.bodyMessage;
+    $ctrl.ok = function () {
+        $uibModalInstance.close($ctrl.selected.item);
+    };
 
+    $ctrl.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
 
 app.directive('mainBooksCatalog', function() {
     return {
@@ -459,15 +478,3 @@ app.directive('userProfile', function () {
 
 
 
- app.controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
-     var $ctrl = this;
-     $ctrl.headMessage = items.headMessage;
-     $ctrl.bodyMessage = items.bodyMessage;
-     $ctrl.ok = function () {
-         $uibModalInstance.close($ctrl.selected.item);
-     };
-
-     $ctrl.cancel = function () {
-         $uibModalInstance.dismiss('cancel');
-     };
- });
