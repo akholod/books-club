@@ -32,15 +32,14 @@ app.config(function($httpProvider, $stateProvider, $urlRouterProvider, Restangul
         resolve: { authenticate: authenticate },
     });
 
-    function authenticate($q, $state, $timeout) {
+    function authenticate($q, $state, $timeout, ModalWindow) {
         if (sessionStorage.getItem('userEmail')) {
             return $q.when()
         } else {
             $timeout(function () {
-                alert('Not authorized!');
+                ModalWindow.openModalWindow('You are not authorized on this page. Please Log In!');
                 $state.go('login');
             });
-
         }
     }
 
@@ -51,8 +50,36 @@ app.config(function($httpProvider, $stateProvider, $urlRouterProvider, Restangul
     RestangularProvider.setBaseUrl("http://localhost:3000/api");
 });
 
+app.service('ModalWindow', ['$uibModal', '$log', function ($uibModal, $log) {
+    this.openModalWindow = function (bodyMessage, headMessage = 'Warning!') {
+        var modalData = {
+            bodyMessage: bodyMessage,
+            headMessage: headMessage,
+        };
+        var modalInstance = $uibModal.open({
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'templates/modal-template.html',
+            controller: 'ModalInstanceCtrl',
+            controllerAs: '$ctrl',
+            resolve: {
+                items: function () {
+                    return modalData;
+                }
+            }
+        });
 
-app.service('AuthUser',  function ($q, $rootScope, $injector, $location) {
+        modalInstance.result.then(function (selectedItem) {
+            $ctrl.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+    };
+
+}]);
+
+
+app.service('AuthUser', ['$q', '$rootScope', '$injector', function ($q, $rootScope, $injector) {
     this.response = (data) => {
         $rootScope.user = {
             userId: sessionStorage.getItem('userId'),
@@ -61,14 +88,15 @@ app.service('AuthUser',  function ($q, $rootScope, $injector, $location) {
         return $q.resolve(data);
     };
     this.responseError = (rejection) => {
-        if(rejection.status === 401 && $location.path().indexOf('login') !== -1) {
+        console.log(rejection)
+        if(rejection.status === 401 && rejection.data === "Unauthorized") {
             $injector.get('$state').go('login');
-            alert('Wrong login or password');
+            $injector.get('ModalWindow').openModalWindow('Wrong login or password!');
         }
         return $q.reject(rejection);
     };
 
-});
+}]);
 
 app.service('BooksCatalog', ['Restangular', function(Restangular) {
     this.getBooks = function() {
@@ -155,13 +183,14 @@ app.service('UserFormsValidator', function() {
     }
 });
 
-app.service('UserHandler', ['$http', 'Session', function($http, Session) {
+app.service('UserHandler', ['$http', 'Session', 'ModalWindow', function($http, Session, ModalWindow) {
     this.loginUser = function(loginData) {
         return $http.post('/login', {
             "email": loginData.email,
             "password": loginData.password,
         }).then((response) => {
             Session.create(response.data.userId, response.data.local.email, response.data.name, response.data.city);
+            ModalWindow.openModalWindow('Hello ' + (response.data.name || response.data.local.email) +'!', 'Login success!');
             return response;
         }, (dataError) => {
             new Error((dataError));
@@ -176,6 +205,7 @@ app.service('UserHandler', ['$http', 'Session', function($http, Session) {
             "city": signupData.city,
         }).then((response) => {
             Session.create(response.data.userId, response.data.local.email, response.data.name, response.data.local.city);
+            ModalWindow.openModalWindow('Hello and welcome ' + (response.data.name || response.data.local.email) +'!', 'Sign Up success!');
             return response;
         }, (dataError) => {
             new Error((dataError));
@@ -265,8 +295,9 @@ app.controller('AddBooksCtrl', ['BookSearch', function(BookSearch) {
     };
 }]);
 
-app.controller('SignupCtrl', ['$state', '$scope', 'UserHandler', 'UserFormsValidator', 'currentUserFact', function( $state, $scope, UserHandler, UserFormsValidator, currentUserFact) {
+app.controller('SignupCtrl', ['$state', '$scope','UserHandler', 'UserFormsValidator', 'currentUserFact', function( $state, $scope, UserHandler, UserFormsValidator, currentUserFact) {
     $scope.user = currentUserFact;
+
 
     this.closeAlert = function () {
         this.signupFailureMessage = '';
@@ -290,10 +321,8 @@ app.controller('SignupCtrl', ['$state', '$scope', 'UserHandler', 'UserFormsValid
         }
 
         UserHandler.signupUser(this.signupData).then((response) => {
-            console.log('askdjashdkhabkjd');
             $scope.user.userEmail = response.data.local.email;
             $scope.user.userId = response.data.userId;
-            console.log('Check');
             $state.go("books");
             this.signupFailureMessage = '';
 
@@ -301,7 +330,7 @@ app.controller('SignupCtrl', ['$state', '$scope', 'UserHandler', 'UserFormsValid
     }
 }]);
 
-app.controller('LoginCtrl', ['$state', '$scope', 'UserHandler', 'currentUserFact', function($state, $scope, UserHandler, currentUserFact) {
+app.controller('LoginCtrl', ['$state', '$scope', 'UserHandler', 'currentUserFact', 'ModalWindow', function($state, $scope, UserHandler, currentUserFact, ModalWindow) {
     $scope.user = currentUserFact;
     this.login = function () {
         UserHandler.loginUser(this.loginData).then((response) => {
@@ -311,7 +340,14 @@ app.controller('LoginCtrl', ['$state', '$scope', 'UserHandler', 'currentUserFact
                 $state.go("books");
             }
         });
-    }
+    };
+
+    this.open = function () {
+        ModalWindow.openModalWindow('Huy pizda i jigga');
+    };
+
+
+
 }]);
 
 
@@ -420,21 +456,18 @@ app.directive('userProfile', function () {
    }
 });
 
-/*
-app.controller('showModalCtrl', function ($modal) {
-    this.open = function () {
-        console.log('opening pop up');
-        let modalInstance = $modal.open({
-            templateUrl: 'templates/modal-template.html',
-            controller: 'ModalAppCtrl',
-            controllerAs: 'modalAppCtrl'
-        });
-    }
-});
 
-app.controller('ModalAppCtrl', function ($modalInstance) {
-    this.title = "alarma!";
-    this.close = function () {
-        $modalInstance.dismiss('cancel');
-    };
-});*/
+
+
+ app.controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
+     var $ctrl = this;
+     $ctrl.headMessage = items.headMessage;
+     $ctrl.bodyMessage = items.bodyMessage;
+     $ctrl.ok = function () {
+         $uibModalInstance.close($ctrl.selected.item);
+     };
+
+     $ctrl.cancel = function () {
+         $uibModalInstance.dismiss('cancel');
+     };
+ });

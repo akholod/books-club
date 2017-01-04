@@ -107,6 +107,14 @@ a {
   animation: spin 1.5s linear infinite;
 }
 
+.modal-body {
+  background: #444;
+  font-size: 2.2rem;
+}
+.modal-header, .modal-footer {
+  background: #222;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
