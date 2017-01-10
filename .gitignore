@@ -40,9 +40,9 @@ jspm_packages
 
 .idea/
 
-!public/bower_components/bootstrap/dist/fonts
-!public/bower_components/bootstrap/fonts
-public/bower_components/
+!client/bower_components/bootstrap/dist/fonts
+!client/bower_components/bootstrap/fonts
+client/bower_components/
 /gnome
 
 
