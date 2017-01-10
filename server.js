@@ -24,7 +24,7 @@ let login = require('./server/routes/login');
 let logout = require('./server/routes/logout');
 let profile = require('./server/routes/profile');
 
-//init app
+//init main-app
 let app = express();
 
 // view engine setup
