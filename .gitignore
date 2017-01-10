@@ -26,7 +26,7 @@ coverage
 .lock-wscript
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
+client/build/Release
 
 # Dependency directories
 node_modules
@@ -43,6 +43,7 @@ jspm_packages
 !client/bower_components/bootstrap/dist/fonts
 !client/bower_components/bootstrap/fonts
 client/bower_components/
+client/build/
 /gnome
 
 

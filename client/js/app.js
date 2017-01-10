@@ -481,5 +481,4 @@ userProfile.directive('userProfile', function () {
 });
 
 
-
-
+module.exports = app;
