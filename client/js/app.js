@@ -1,6 +1,11 @@
 'use strict';
 
-const app = angular.module('myApp', ['restangular', 'ui.router', 'ngAnimate', 'ui.bootstrap']);
+const app = angular.module('app', ['restangular', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'booksCatalog', 'addBooks', 'userProfile', 'userAuth']);
+
+const booksCatalog = angular.module('booksCatalog', []);
+const addBooks = angular.module('addBooks', []);
+const userProfile = angular.module('userProfile', []);
+const userAuth = angular.module('userAuth', []);
 
 app.config(function($httpProvider, $stateProvider, $urlRouterProvider, RestangularProvider) {
     $stateProvider
@@ -275,19 +280,19 @@ app.factory('currentUserFact', function () {
     }
 });
 
-app.controller('BooksCtrl', ['BooksCatalog', function(BooksCatalog) {
+booksCatalog.controller('BooksCtrl', ['BooksCatalog', function(BooksCatalog) {
     BooksCatalog.getBooks().then((response) => {
         this.books = response;
     });
 }]);
 
-app.controller('BookDescriptionCtrl', ['BooksCatalog', '$stateParams', function(BooksCatalog, $stateParams) {
+booksCatalog.controller('BookDescriptionCtrl', ['BooksCatalog', '$stateParams', function(BooksCatalog, $stateParams) {
     BooksCatalog.getBook($stateParams.bookId).then((response) => {
         this.book = response;
     });
 }]);
 
-app.controller('AddBooksCtrl', ['BookSearch', 'BooksActions', function(BookSearch, BooksActions) {
+addBooks.controller('AddBooksCtrl', ['BookSearch', 'BooksActions', function(BookSearch, BooksActions) {
     this.bookSearchLang = false;
 
     this.searchBook = function () {
@@ -306,7 +311,7 @@ app.controller('AddBooksCtrl', ['BookSearch', 'BooksActions', function(BookSearc
     }
 }]);
 
-app.controller('SignupCtrl', ['$state', '$scope','UserHandler', 'UserFormsValidator', 'currentUserFact', function( $state, $scope, UserHandler, UserFormsValidator, currentUserFact) {
+userAuth.controller('SignupCtrl', ['$state', '$scope','UserHandler', 'UserFormsValidator', 'currentUserFact', function( $state, $scope, UserHandler, UserFormsValidator, currentUserFact) {
     $scope.user = currentUserFact;
 
 
@@ -341,7 +346,7 @@ app.controller('SignupCtrl', ['$state', '$scope','UserHandler', 'UserFormsValida
     }
 }]);
 
-app.controller('LoginCtrl', ['$state', '$scope', 'UserHandler', 'currentUserFact', 'ModalWindow', function($state, $scope, UserHandler, currentUserFact, ModalWindow) {
+userAuth.controller('LoginCtrl', ['$state', '$scope', 'UserHandler', 'currentUserFact', 'ModalWindow', function($state, $scope, UserHandler, currentUserFact, ModalWindow) {
     $scope.user = currentUserFact;
     this.login = function () {
         UserHandler.loginUser(this.loginData).then((response) => {
@@ -359,7 +364,7 @@ app.controller('LoginCtrl', ['$state', '$scope', 'UserHandler', 'currentUserFact
 }]);
 
 
-app.controller('CurrentUserCtrl', ['$state', '$rootScope', '$scope', 'UserHandler', 'currentUserFact', function($state, $rootScope, $scope, UserHandler, currentUserFact) {
+userAuth.controller('CurrentUserCtrl', ['$state', '$rootScope', '$scope', 'UserHandler', 'currentUserFact', function($state, $rootScope, $scope, UserHandler, currentUserFact) {
 
     $scope.user = currentUserFact;
     $scope.userSession = $rootScope.user;
@@ -375,7 +380,7 @@ app.controller('CurrentUserCtrl', ['$state', '$rootScope', '$scope', 'UserHandle
     }
 }]);
 
-app.controller('UserProfileCtrl', ['UserProfileHandler', '$http', function (UserProfileHandler, $http) {
+userProfile.controller('UserProfileCtrl', ['UserProfileHandler', '$http', function (UserProfileHandler, $http) {
     UserProfileHandler.getOutcomingRequests().then((response) => {
         this.outcomingRequests = response;
         console.log(this.outcomingRequests)
@@ -406,7 +411,7 @@ app.controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
     };
 });
 
-app.directive('mainBooksCatalog', function() {
+booksCatalog.directive('mainBooksCatalog', function() {
     return {
         restrict: 'E',
         scope: {},
@@ -416,7 +421,7 @@ app.directive('mainBooksCatalog', function() {
     };
 });
 
-app.directive('bookCard', function() {
+booksCatalog.directive('bookCard', function() {
     return {
         restrict: 'E',
         scope: {},
@@ -426,7 +431,7 @@ app.directive('bookCard', function() {
     };
 });
 
-app.directive('addBooksForm', function () {
+addBooks.directive('addBooksForm', function () {
    return {
        restrict: 'E',
        scope: {},
@@ -436,7 +441,7 @@ app.directive('addBooksForm', function () {
    }
 });
 
-app.directive('signupForm', function() {
+userAuth.directive('signupForm', function() {
     return {
         restrict: 'E',
         scope: {},
@@ -446,7 +451,7 @@ app.directive('signupForm', function() {
     };
 });
 
-app.directive('loginForm', function() {
+userAuth.directive('loginForm', function() {
     return {
         restrict: 'E',
         scope: {},
@@ -455,7 +460,7 @@ app.directive('loginForm', function() {
         controllerAs: 'loginCtrl',
     };
 });
-app.directive('currentUser', function() {
+userAuth.directive('currentUser', function() {
     return {
         restrict: 'E',
         scope: {},
@@ -465,7 +470,7 @@ app.directive('currentUser', function() {
     };
 });
 
-app.directive('userProfile', function () {
+userProfile.directive('userProfile', function () {
    return {
        restrict: 'E',
        scope: {},
