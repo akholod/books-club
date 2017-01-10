@@ -11,24 +11,24 @@ const flash = require('connect-flash');
 const favicon = require('serve-favicon');
 
 const port = process.env.PORT || 8080;
-require('./config/passport')(passport);
+require('./server/config/passport')(passport);
 require('./db');
 
-let index = require('./routes/index');
-let books = require('./routes/books');
-let booksId = require('./routes/books_id');
-let userBooks = require('./routes/user_books');
-let searchBooks = require('./routes/search-books');
-let signup = require('./routes/signup');
-let login = require('./routes/login');
-let logout = require('./routes/logout');
-let profile = require('./routes/profile');
+let index = require('./server/routes/index');
+let books = require('./server/routes/books');
+let booksId = require('./server/routes/books_id');
+let userBooks = require('./server/routes/user_books');
+let searchBooks = require('./server/routes/search-books');
+let signup = require('./server/routes/signup');
+let login = require('./server/routes/login');
+let logout = require('./server/routes/logout');
+let profile = require('./server/routes/profile');
 
 //init app
 let app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'server/views'));
 app.set('view engine', 'jade');
 
 app.use(favicon(path.join(__dirname, 'client', 'favicon.ico')));

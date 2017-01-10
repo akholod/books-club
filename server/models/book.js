@@ -1,7 +1,7 @@
 'use strict';
 const mongoose = require("mongoose");
 const autoIncrement = require('mongoose-auto-increment');
-const db = require("../db");
+const db = require("../../db");
 
 //Books schema
 let Schema = mongoose.Schema;
