@@ -1,0 +1,22 @@
+<div class="search-panel">
+    <div class="search-field">
+        Search
+        <input type="text" placeholder="Search book" ng-model="booksCtrl.searchBook">
+    </div>
+    <div class="order-field">
+        Order By
+        <select ng-model="booksCtrl.orderBook">
+            <option value="">---Select---</option>
+            <option value="createdAt">Date</option>
+            <option value="authors[0]">Author</option>
+            <option value="pageCount">Pages</option>
+        </select>
+    </div>
+</div>
+
+<div ng-repeat="book in booksCtrl.books | filter : booksCtrl.searchBook | orderBy : booksCtrl.orderBook" class="item grid-item animate-repeat">
+    <img ng-src="{{book.image}}" class="img-responsive" ui-sref="book({bookId: book.bookId})" ui-sref-active="active">
+    <div class="trade glyphicon glyphicon-retweet"></div>
+</div>
+
+

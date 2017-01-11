@@ -1,10 +1,11 @@
 'use strict';
 
 const userAuth = require('./user-auth');
+const booksCatalog = require('./books-catalog');
 
 const app = angular.module('app', ['restangular', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'booksCatalog', 'addBooks', 'userProfile', 'userAuth']);
 
-const booksCatalog = angular.module('booksCatalog', []);
+
 const addBooks = angular.module('addBooks', []);
 const userProfile = angular.module('userProfile', []);
 
@@ -13,7 +14,7 @@ app.config(function($httpProvider, $stateProvider, $urlRouterProvider, Restangul
     $stateProvider
         .state('books', {
         url: '/books',
-        template: '<main-books-catalog></main-books-catalog>'
+        template: '<books-catalog></books-catalog>'
         })
         .state('book', {
             url: '/books/:bookId',
@@ -282,18 +283,6 @@ app.factory('currentUserFact', function () {
     }
 });
 
-booksCatalog.controller('BooksCtrl', ['BooksCatalog', function(BooksCatalog) {
-    BooksCatalog.getBooks().then((response) => {
-        this.books = response;
-    });
-}]);
-
-booksCatalog.controller('BookDescriptionCtrl', ['BooksCatalog', '$stateParams', function(BooksCatalog, $stateParams) {
-    BooksCatalog.getBook($stateParams.bookId).then((response) => {
-        this.book = response;
-    });
-}]);
-
 addBooks.controller('AddBooksCtrl', ['BookSearch', 'BooksActions', function(BookSearch, BooksActions) {
     this.bookSearchLang = false;
 
@@ -347,25 +336,8 @@ app.controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
     };
 });
 
-booksCatalog.directive('mainBooksCatalog', function() {
-    return {
-        restrict: 'E',
-        scope: {},
-        templateUrl: 'templates/main-books-catalog.html',
-        controller: 'BooksCtrl',
-        controllerAs: 'booksCtrl',
-    };
-});
 
-booksCatalog.directive('bookCard', function() {
-    return {
-        restrict: 'E',
-        scope: {},
-        templateUrl: 'templates/book-card.html',
-        controller: 'BookDescriptionCtrl',
-        controllerAs: 'bookDescriptionCtrl',
-    };
-});
+
 
 addBooks.directive('addBooksForm', function () {
    return {
