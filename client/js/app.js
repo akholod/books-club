@@ -1,11 +1,13 @@
 'use strict';
 
+const userAuth = require('./user-auth');
+
 const app = angular.module('app', ['restangular', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'booksCatalog', 'addBooks', 'userProfile', 'userAuth']);
 
 const booksCatalog = angular.module('booksCatalog', []);
 const addBooks = angular.module('addBooks', []);
 const userProfile = angular.module('userProfile', []);
-const userAuth = angular.module('userAuth', []);
+
 
 app.config(function($httpProvider, $stateProvider, $urlRouterProvider, RestangularProvider) {
     $stateProvider
@@ -311,74 +313,8 @@ addBooks.controller('AddBooksCtrl', ['BookSearch', 'BooksActions', function(Book
     }
 }]);
 
-userAuth.controller('SignupCtrl', ['$state', '$scope','UserHandler', 'UserFormsValidator', 'currentUserFact', function( $state, $scope, UserHandler, UserFormsValidator, currentUserFact) {
-    $scope.user = currentUserFact;
 
 
-    this.closeAlert = function () {
-        this.signupFailureMessage = '';
-    };
-    this.signup = function () {
-        let isInvalid = UserFormsValidator.isEmailValid(this.signupData.email);
-        if(isInvalid) {
-            return this.signupFailureMessage = isInvalid;
-        }
-        isInvalid = UserFormsValidator.isPasswordValid(this.signupData.password);
-        if(isInvalid) {
-            return this.signupFailureMessage = isInvalid;
-        }
-        isInvalid = UserFormsValidator.isUsernameValid(this.signupData.name);
-        if(isInvalid) {
-            return this.signupFailureMessage = isInvalid;
-        }
-        isInvalid = UserFormsValidator.isPasswordConfirm(this.signupData.password, this.signupData.confirmPassword);
-        if(isInvalid) {
-            return this.signupFailureMessage = isInvalid;
-        }
-
-        UserHandler.signupUser(this.signupData).then((response) => {
-            $scope.user.userEmail = response.data.local.email;
-            $scope.user.userId = response.data.userId;
-            $state.go("books");
-            this.signupFailureMessage = '';
-
-        });
-    }
-}]);
-
-userAuth.controller('LoginCtrl', ['$state', '$scope', 'UserHandler', 'currentUserFact', 'ModalWindow', function($state, $scope, UserHandler, currentUserFact, ModalWindow) {
-    $scope.user = currentUserFact;
-    this.login = function () {
-        UserHandler.loginUser(this.loginData).then((response) => {
-            if(response.data.userId) {
-                $scope.user.userEmail = response.data.local.email;
-                $scope.user.userId = response.data.userId;
-                $state.go("books");
-            }
-        });
-    };
-
-    this.open = function () {
-        ModalWindow.openModalWindow('Huy pizda i jigga');
-    };
-}]);
-
-
-userAuth.controller('CurrentUserCtrl', ['$state', '$rootScope', '$scope', 'UserHandler', 'currentUserFact', function($state, $rootScope, $scope, UserHandler, currentUserFact) {
-
-    $scope.user = currentUserFact;
-    $scope.userSession = $rootScope.user;
-
-    this.logoutCurrentUser = function () {
-        UserHandler.logoutUser().then((response) => {
-            $scope.user.userEmail = '';
-            $scope.user.userId = '';
-            $scope.userSession.userEmail = '';
-            $scope.userSession.userId = '';
-            $state.go("books");
-        });
-    }
-}]);
 
 userProfile.controller('UserProfileCtrl', ['UserProfileHandler', '$http', function (UserProfileHandler, $http) {
     UserProfileHandler.getOutcomingRequests().then((response) => {
@@ -441,34 +377,6 @@ addBooks.directive('addBooksForm', function () {
    }
 });
 
-userAuth.directive('signupForm', function() {
-    return {
-        restrict: 'E',
-        scope: {},
-        templateUrl: 'templates/signup-form.html',
-        controller: 'SignupCtrl',
-        controllerAs: 'signupCtrl',
-    };
-});
-
-userAuth.directive('loginForm', function() {
-    return {
-        restrict: 'E',
-        scope: {},
-        templateUrl: 'templates/login-form.html',
-        controller: 'LoginCtrl',
-        controllerAs: 'loginCtrl',
-    };
-});
-userAuth.directive('currentUser', function() {
-    return {
-        restrict: 'E',
-        scope: {},
-        templateUrl: 'templates/current-user.html',
-        controller: 'CurrentUserCtrl',
-        controllerAs: 'currentUserCtrl',
-    };
-});
 
 userProfile.directive('userProfile', function () {
    return {
