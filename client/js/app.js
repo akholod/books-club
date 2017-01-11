@@ -2,11 +2,11 @@
 
 const userAuth = require('./user-auth');
 const booksCatalog = require('./books-catalog');
+const addBooks = require('./add-books');
 
 const app = angular.module('app', ['restangular', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'booksCatalog', 'addBooks', 'userProfile', 'userAuth']);
 
 
-const addBooks = angular.module('addBooks', []);
 const userProfile = angular.module('userProfile', []);
 
 
@@ -283,24 +283,6 @@ app.factory('currentUserFact', function () {
     }
 });
 
-addBooks.controller('AddBooksCtrl', ['BookSearch', 'BooksActions', function(BookSearch, BooksActions) {
-    this.bookSearchLang = false;
-
-    this.searchBook = function () {
-        if (this.bookSearchField.length > 2) {
-            BookSearch.findBooks(this.bookSearchField, this.bookSearchLang).then((response) => {
-                console.log(response.data);
-                this.foundBooks = response.data;
-            });
-        }
-    };
-
-    this.addToUserBooks = function(foundBook) {
-        BooksActions.addToUsersBooks(foundBook).then((response) => {
-            console.log(response);
-        });
-    }
-}]);
 
 
 
@@ -334,19 +316,6 @@ app.controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
     $ctrl.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
-});
-
-
-
-
-addBooks.directive('addBooksForm', function () {
-   return {
-       restrict: 'E',
-       scope: {},
-       templateUrl: 'templates/add-books-form.html',
-       controller: 'AddBooksCtrl',
-       controllerAs: 'addBooksCtrl',
-   }
 });
 
 
