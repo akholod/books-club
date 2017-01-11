@@ -1,12 +1,12 @@
 'use strict';
 
-module.exports = function($state, $rootScope, $scope, UserHandler, currentUserFact) {
+module.exports = function($state, $rootScope, $scope, UserHandler) {
 
-    $scope.user = currentUserFact;
     $scope.userSession = $rootScope.user;
 
     this.logoutCurrentUser = function () {
         UserHandler.logoutUser().then((response) => {
+            $scope.user = {};
             $scope.user.userEmail = '';
             $scope.user.userId = '';
             $scope.userSession.userEmail = '';

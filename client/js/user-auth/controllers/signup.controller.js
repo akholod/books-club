@@ -1,9 +1,7 @@
 'use strict';
 
 
-module.exports = function( $state, $scope, UserHandler, UserFormsValidator, currentUserFact) {
-    $scope.user = currentUserFact;
-
+module.exports = function($state, $scope, UserHandler, UserFormsValidator) {
 
     this.closeAlert = function () {
         this.signupFailureMessage = '';
@@ -27,6 +25,7 @@ module.exports = function( $state, $scope, UserHandler, UserFormsValidator, curr
         }
 
         UserHandler.signupUser(this.signupData).then((response) => {
+            $scope.user = {};
             $scope.user.userEmail = response.data.local.email;
             $scope.user.userId = response.data.userId;
             $state.go("books");
