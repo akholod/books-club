@@ -43,7 +43,7 @@ jspm_packages
 !client/bower_components/bootstrap/dist/fonts
 !client/bower_components/bootstrap/fonts
 client/bower_components/
-client/build/
+
 /gnome
 
 
