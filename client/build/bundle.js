@@ -68800,6 +68800,14 @@
 	            "bookTitle": searchBookTitle,
 	            "bookLang": searchBookLang
 	        }).then(function (response) {
+	            var arr = [];
+	            response.data.forEach(function (item) {
+	                item.thumbnail = item.thumbnail.replace("http:", "https:");
+	                arr.push(item);
+	            });
+	            response.data = arr;
+	            console.log(arr);
+	            console.log(response);
 	            return response;
 	        }, function (dataError) {
 	            new Error(dataError);
