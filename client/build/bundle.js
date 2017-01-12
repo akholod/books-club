@@ -68411,8 +68411,10 @@
 	                var arr = [];
 	                if (response.data.length > 3) {
 	                    response.data.forEach(function (item) {
-	                        item.thumbnail = item.thumbnail.replace("http:", "https:");
-	                        arr.push(item);
+	                        if (item.thumbnail.length) {
+	                            item.thumbnail = item.thumbnail.replace("http:", "https:");
+	                            arr.push(item);
+	                        }
 	                    });
 	                    response.data = arr;
 	                }
