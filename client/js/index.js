@@ -10,4 +10,9 @@ require('restangular');
 // application initialization
 require('./app');
 
+require('./app.config');
+
+require('./shared');
+
 require('./services');
+
