@@ -6,6 +6,10 @@ module.exports = function($http) {
             "bookTitle" : searchBookTitle,
             "bookLang" : searchBookLang,
         }).then((response) => {
+            console.log(response);
+            response.data.forEach(function (item) {
+                item.thumbnail.replace(/http:/, "https:");
+            });
             return response;
         }, (dataError) => {
             new Error((dataError));
