@@ -8,7 +8,7 @@ const booksGoogle = require('google-books-search');
 
 router.post('/books/search', isLoggedIn, function(req, res) {
     let bookSearchOptions = {
-        limit: 6,
+        limit: 7,
         type: 'books',
         lang: 'ru'
     };
@@ -25,6 +25,8 @@ router.post('/books/search', isLoggedIn, function(req, res) {
         if (error) {
             return console.log(error);
         }
+        console.log(results.data.thumbnail);
+        results.data.thumbnail.replace("http", "https");
         res.json(results);
     });
 });

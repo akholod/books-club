@@ -48,8 +48,8 @@ module.exports =
             $httpProvider.interceptors.push('AuthUser');
 
             $urlRouterProvider.otherwise('/books');
-
             RestangularProvider.setBaseUrl("https://books-ex.herokuapp.com/api");
+
         })
 
         .run(function ($rootScope) {
