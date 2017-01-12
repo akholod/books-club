@@ -6,7 +6,6 @@ module.exports = function($http) {
             "bookTitle" : searchBookTitle,
             "bookLang" : searchBookLang,
         }).then((response) => {
-            console.log(response);
             return response;
         }, (dataError) => {
             new Error((dataError));

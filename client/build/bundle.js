@@ -68800,7 +68800,6 @@
 	            "bookTitle": searchBookTitle,
 	            "bookLang": searchBookLang
 	        }).then(function (response) {
-	            console.log(response);
 	            return response;
 	        }, function (dataError) {
 	            new Error(dataError);
