@@ -25,6 +25,12 @@ router.post('/books/search', isLoggedIn, function(req, res) {
         if (error) {
             return console.log(error);
         }
+        var arr = [];
+        results.data.forEach(function (item) {
+            item.thumbnail = item.thumbnail.replace("http:", "https:");
+            arr.push(item);
+        });
+        results.data = arr;
         res.json(results);
     });
 });
