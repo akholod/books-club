@@ -26,11 +26,11 @@ router.post('/books/search', isLoggedIn, function(req, res) {
             return console.log(error);
         }
         var arr = [];
-        results.data.forEach(function (item) {
+        results.forEach(function (item) {
             item.thumbnail = item.thumbnail.replace("http:", "https:");
             arr.push(item);
         });
-        results.data = arr;
+        results = arr;
         res.json(results);
     });
 });
