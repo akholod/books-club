@@ -1,7 +1,7 @@
-# books-club SPA  (not finalized)
-### App for books exchange between users
+# Books club
+### App for books exchange between users (not finalized)
 
-My pet-project
+my pet-project SPA
 
 Used Angular 1.x. Node.js, Expres.js, Mongo DB and Webpack build
 
