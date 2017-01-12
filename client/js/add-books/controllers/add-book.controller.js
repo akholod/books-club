@@ -7,11 +7,13 @@ module.exports = function(BookSearch, BooksActions) {
         if (this.bookSearchField.length > 2) {
             BookSearch.findBooks(this.bookSearchField, this.bookSearchLang).then((response) => {
                 let arr = [];
-                response.data.forEach((item) => {
-                    item.thumbnail = item.thumbnail.replace("http:","https:");
-                    arr.push(item)
-                });
-                response.data = arr;
+                if(response.data.length) {
+                    response.data.forEach((item) => {
+                        item.thumbnail = item.thumbnail.replace("http:","https:");
+                        arr.push(item)
+                    });
+                    response.data = arr;
+                }
                 console.log(arr);
                 console.log(response);
                 this.foundBooks = response.data;
