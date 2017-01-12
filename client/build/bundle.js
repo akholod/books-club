@@ -68408,6 +68408,14 @@
 	
 	        if (this.bookSearchField.length > 2) {
 	            BookSearch.findBooks(this.bookSearchField, this.bookSearchLang).then(function (response) {
+	                var arr = [];
+	                response.data.forEach(function (item) {
+	                    item.thumbnail = item.thumbnail.replace("http:", "https:");
+	                    arr.push(item);
+	                });
+	                response.data = arr;
+	                console.log(arr);
+	                console.log(response);
 	                _this.foundBooks = response.data;
 	            });
 	        }
@@ -68800,14 +68808,6 @@
 	            "bookTitle": searchBookTitle,
 	            "bookLang": searchBookLang
 	        }).then(function (response) {
-	            var arr = [];
-	            response.data.forEach(function (item) {
-	                item.thumbnail = item.thumbnail.replace("http:", "https:");
-	                arr.push(item);
-	            });
-	            response.data = arr;
-	            console.log(arr);
-	            console.log(response);
 	            return response;
 	        }, function (dataError) {
 	            new Error(dataError);
