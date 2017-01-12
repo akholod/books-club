@@ -10,9 +10,9 @@ module.exports = function(BookSearch, BooksActions) {
                 if (response.data.length > 3) {
                     response.data.forEach((item) => {
                         if(item.thumbnail.length) {
-                            item.thumbnail = item.thumbnail.replace("http:","https:");
-                            arr.push(item)
+                            item.thumbnail = item.thumbnail.replace("http:","https:")                         
                         }
+                        arr.push(item);
                     });
                     response.data = arr;
                 }
