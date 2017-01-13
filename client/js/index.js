@@ -16,3 +16,7 @@ require('./shared');
 
 require('./services');
 
+//style scss compiling
+
+require("!style-loader!css-loader!resolve-url-loader!sass-loader!../styles/main.scss");
+

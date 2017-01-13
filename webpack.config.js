@@ -21,8 +21,11 @@ module.exports = {
             },
             {test: /\.html$/, loader: 'raw-loader'},
 
-        ]
-    },
+            {
+                test: /\.scss$/,
+                loaders: ['style-loader', 'css-loader', 'resolve-url-loader', 'sass-loader?sourceMap']
+            }
+        ]},
     devtool: "source-map",
     watch: true
 };

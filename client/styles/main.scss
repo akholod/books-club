@@ -1,4 +1,15 @@
-@import url('https://fonts.googleapis.com/css?family=Lato|Roboto');
+@import "libs/bootsrap/bootstrap";
+@import "animation";
+$varka: #aa880c;
+
+.test {
+  width: 100px;
+  height: 100px;
+  background-color: $varka;
+  border: 5px solid #7fff27;
+}
+
+
 
 body {
   font-size: 1.9rem;
@@ -19,6 +30,7 @@ a {
 }
 .trade, .remove {
   position: absolute;
+  top: 0;
   left: 5%;
   cursor: pointer;
   color: #ff0e13;
@@ -68,7 +80,7 @@ a {
   background-color: #222;
 }
 .panel-body span {
-   padding: 5% 25px;
+  padding: 5% 25px;
 }
 .search-books {
   margin: 30px 0;

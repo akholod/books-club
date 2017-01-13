@@ -16,7 +16,8 @@
 
 <div ng-repeat="book in booksCtrl.books | filter : booksCtrl.searchBook | orderBy : booksCtrl.orderBook" class="item grid-item animate-repeat">
     <img ng-src="{{book.image}}" class="img-responsive" ui-sref="book({bookId: book.bookId})" ui-sref-active="active">
-    <div class="trade glyphicon glyphicon-retweet"></div>
+    <i class="trade fa fa-retweet" aria-hidden="true"></i>
+
 </div>
 
 
