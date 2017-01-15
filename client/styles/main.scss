@@ -1,41 +1,57 @@
+//import custom bootstrap
 @import "libs/bootsrap/bootstrap";
+
+//imports
+@import "variables";
 @import "animation";
-$varka: #aa880c;
+@import "loader";
+@import "massonry-grid";
+@import "modal";
 
-.test {
-  width: 100px;
-  height: 100px;
-  background-color: $varka;
-  border: 5px solid #7fff27;
-}
-
-
-
+//globals
 body {
-  font-size: 1.9rem;
-  background-color: #333;
-  color: #fff;
-  font-family: 'Roboto', Arial , sans-serif;
+  font-size: $basicFontSize;
+  background-color: $basicBackgroundColor;
+  color: $basicFontColor;
+  font-family: $basicFontStyle;
 }
 h1,h2,h3,p,a {
-  font-family: 'Lato', Arial ,sans-serif ;
+  font-family: $secondaryFontStyle;
 }
 a {
-  color: #00B7FF;
   cursor: pointer;
 }
-.item, .user-books {
+.active {
+  background: #9954BB;
+}
+.book-thumb {
   position: relative;
   margin: 15px auto;
 }
-.trade, .remove {
+.item, .user-books, .search-books {
+  @extend .book-thumb;
+}
+.item, .search-books {
+  cursor: pointer;
+}
+.icon {
   position: absolute;
   top: 0;
   left: 5%;
   cursor: pointer;
+}
+.trade, .remove {
+  @extend .icon;
   color: #ff0e13;
 }
+.alert-message {
+  padding: 7px 10px;
+}
+.form-group {
+  margin: 25px 0;
+}
 
+//user profile
 .request {
   position: absolute;
   left: calc(50% - 40px);
@@ -43,103 +59,46 @@ a {
   width: 80px;
   background: rgba(33,33,33,0.7);
   font-size: 1.3rem;
+  .requestAuthor {
+    z-index: 999;
+    top: 80%;
+    left: 10%;
+    color: #ffa809;
+    display: none;
+  }
 }
 .request:hover ~ .requestAuthor {
   display: block;
 }
-.accept {
-  color: green;
-  cursor: pointer;
+
+.panel {
+  .panel-body {
+    background-color: #222;
+  }
+  .panel-body span {
+    padding: 5% 25px;
+  }
 }
 
-.item img {
-  cursor: pointer;
-}
-.requestAuthor {
-  position: absolute;
-  background: rgba(33,33,33,0.7);
-  z-index: 999;
-  font-size: 1.5rem;
-  top: 80%;
-  left: 10%;
-  color: #ffa809;
-  display: none;
-}
-.grid:after {
-  content: '';
-  display: block;
-  clear: both;
-}
-.grid-item {
-  width: 150px;
-  height: 200px;
-  float: left;
-  border-radius: 5px;
-}
-.panel-body {
-  background-color: #222;
-}
-.panel-body span {
-  padding: 5% 25px;
-}
-.search-books {
-  margin: 30px 0;
-  cursor: pointer;
-}
+//books search
 .search-form {
   margin: 40px auto;
 }
 .search-lang {
   padding-top: 10px;
 }
-.form-control {
-  padding: 10px;
-  height: 43px;
-  display: inline-block;
-}
+
 .search-field, .order-field {
   display: inline-block;
   margin: 5px 20px;
   font-size: 2.1rem;
-}
-.search-field input, .order-field select {
-  color: #333;
-  font-size: 1.8rem;
-  border: 0;
-  padding: 7px 10px;
-  margin: 5px;
-}
-.loader {
-  margin: calc(50% - 350px) auto;
-  border: 25px solid #f3f3f3;
-  border-top: 25px solid #9954BB;
-  border-radius: 50%;
-  width: 250px;
-  height: 250px;
-  animation: spin 1.5s linear infinite;
+  input, select {
+    color: #333;
+    border: 0;
+    padding: 7px 10px;
+    margin: 5px;
+  }
 }
 
-.modal-body {
-  background: #444;
-  font-size: 2.2rem;
-}
-.modal-header, .modal-footer {
-  background: #222;
-}
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-.active {
-  background: #9954BB;
-}
-.alert {
-  padding: 7px 10px;
-}
-.form-horizontal {
-  margin-top: 50px;
-}
-.form-group {
-  margin: 25px 0;
-}
+
