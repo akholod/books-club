@@ -3,7 +3,8 @@
  */
 'use strict';
 const mongoose = require('mongoose');
-mongoose.connect(process.env.MONGOLAB_URI);
+//conect to DB or testDB
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://akholod:3v1a6l0e0r2a@ds163667.mlab.com:63667/books_club');
 
 
 //create db connection
