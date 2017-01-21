@@ -30,8 +30,9 @@
             <h3 class="panel-title">Ваши книги для обмена</h3>
         </div>
         <div class="panel-body">
-            <div ng-repeat="userBook in userProfileCtrl.userBooks" class="item grid-item animate-repeat">
+            <div ng-repeat="userBook in userProfileCtrl.userBooks track by $index" class="item grid-item animate-repeat">
                 <img ng-src="{{userBook.image}}" class="img-responsive" class="item grid-item animate-repeat">
+                <i class="remove fa fa-remove" aria-hidden="true" ng-click="userProfileCtrl.removeBook(userBook, $index)"></i>
             </div>
         </div>
     </div>

@@ -10,6 +10,7 @@ module.exports = function($state, Restangular, ModalWindow) {
                 new Error((dataError));
             });
     };
+
     this.addToUsersBooks = function (book) {
         return Restangular.all('books').post({
             title: book.title,
@@ -26,5 +27,15 @@ module.exports = function($state, Restangular, ModalWindow) {
         }, (dataError) => {
             new Error((dataError));
         });
+    };
+
+    this.removeBook = function (bookId) {
+        return Restangular.one('books', bookId).remove()
+            .then((response) => {
+                ModalWindow.openModalWindow(response.message, 'Success!');
+                return response;
+            }, (dataError) => {
+                new Error((dataError));
+            });
     }
-}
+};
