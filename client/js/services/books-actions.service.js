@@ -4,6 +4,7 @@ module.exports = function($state, Restangular, ModalWindow) {
     this.createTradeRequest = function(bookId) {
         return Restangular.one('books', bookId).put()
             .then((response) => {
+                ModalWindow.openModalWindow(response.message, 'Success!');
                 return response;
             }, (dataError) => {
                 new Error((dataError));

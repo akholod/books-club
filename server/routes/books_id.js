@@ -25,7 +25,7 @@ router.route('/books/:book_id')
                 res.status(500).send("Database error");
                 return new Error(err);
             }
-            res.json({ message: 'Successfully updated' });
+            res.json({ message: 'Request created' });
         })
     })
     .delete(function(req, res) {  //delete book from db by title
