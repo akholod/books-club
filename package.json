@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "heroku-postbuild": "npm run webpack bower install"
+    "heroku-postbuild": "npm run webpack"
   },
   "dependencies": {
     "angular": "^1.6.1",
