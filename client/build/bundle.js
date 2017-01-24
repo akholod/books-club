@@ -68552,7 +68552,7 @@
 	
 	    $urlRouterProvider.otherwise('/books');
 	
-	    RestangularProvider.setBaseUrl("http://books-ex.herokuapp.com//api");
+	    RestangularProvider.setBaseUrl("https://books-ex.herokuapp.com/api");
 	}).run(function ($rootScope) {
 	    $rootScope.user = {
 	        userId: sessionStorage.getItem('userId'),

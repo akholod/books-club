@@ -49,7 +49,7 @@ module.exports =
 
             $urlRouterProvider.otherwise('/books');
 
-            RestangularProvider.setBaseUrl("http://books-ex.herokuapp.com//api");
+            RestangularProvider.setBaseUrl("https://books-ex.herokuapp.com/api");
         })
 
         .run(function ($rootScope) {
