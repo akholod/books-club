@@ -12,7 +12,7 @@ User story:
   * As a authenticated user i can view my profile.
   * As a authenticated user i can create books requests to another users, and accept requests from them.
 
-Check it: https://books-ex.herokuapp.com/
+Check it: http://books-ex.herokuapp.com/
 
 This repository has 'backbone-branch' with the same functional, but clients code based on Backbone.js
 
