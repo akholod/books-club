@@ -37,7 +37,7 @@ router.put('/userbooks/wishlist/:book_id', isLoggedIn, function(req, res) {
                     res.status(500).send("Database error");
                     return new Error(err);
                 }
-                res.json({ message: 'Successfully updated' });
+                res.json({ message: 'Request removed' });
 
             })
         } else {

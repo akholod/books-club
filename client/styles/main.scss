@@ -27,6 +27,9 @@ a {
 .book-thumb {
   position: relative;
   margin: 15px auto;
+   img {
+     margin: 0 auto;
+   }
 }
 .item, .user-books, .search-books {
   @extend .book-thumb;
@@ -37,12 +40,17 @@ a {
 .icon {
   position: absolute;
   top: 0;
-  left: 5%;
+  left: 10%;
   cursor: pointer;
 }
 .trade, .remove {
   @extend .icon;
   color: #ff0e13;
+}
+.accept {
+  @extend .icon;
+  position: static;
+  color: #3FB618;
 }
 .alert-message {
   padding: 7px 10px;
@@ -52,25 +60,24 @@ a {
 }
 
 //user profile
-.request {
+.incoming-request {
   position: absolute;
-  left: calc(50% - 40px);
-  top: 45%;
-  width: 80px;
-  background: rgba(33,33,33,0.7);
-  font-size: 1.3rem;
-  .requestAuthor {
-    z-index: 999;
-    top: 80%;
-    left: 10%;
-    color: #ffa809;
-    display: none;
+  top: 20%;
+  left: 5%;
+  cursor: default;
+  background: $basicBackgroundColor;
+  text-align: center;
+  max-width: 80%;
+  .fa {
+    cursor: pointer;
+  }
+  .fa-check {
+    color: #3FB618;
+  }
+  .fa-remove {
+    color: #ff0e13;
   }
 }
-.request:hover ~ .requestAuthor {
-  display: block;
-}
-
 .panel {
   .panel-body {
     background-color: #222;
