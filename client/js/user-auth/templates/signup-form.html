@@ -30,7 +30,7 @@
             <input id="inputCity" type="text"  placeholder="Введите ваш город" class="form-control"  ng-model="signupCtrl.signupData.city"/>
         </div>
     </div>
-    <div class="col-sm-offset-3 col-sm-9 alert alert-danger text-center" role="alert" ng-if="signupCtrl.signupFailureMessage">
+    <div class="col-sm-offset-3 col-sm-9 alert-message alert-danger text-center" role="alert" ng-if="signupCtrl.signupFailureMessage">
         <button type="button" class="close" ng-click="signupCtrl.closeAlert()"><span aria-hidden="true">&times;</span></button>
         {{signupCtrl.signupFailureMessage}}
     </div>
@@ -40,6 +40,6 @@
         </div>
     </div>
     <div>
-        <
+
     </div>
 </form>

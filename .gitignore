@@ -19,8 +19,7 @@ coverage
 # nyc test coverage
 .nyc_output
 
-# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
+
 
 # node-waf configuration
 .lock-wscript
@@ -40,8 +39,7 @@ jspm_packages
 
 .idea/
 
-!client/bower_components/bootstrap/dist/fonts
-!client/bower_components/bootstrap/fonts
+
 client/bower_components/
 
 /gnome

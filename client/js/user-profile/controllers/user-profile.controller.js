@@ -1,6 +1,7 @@
 'use strict';
 
-module.exports = function (UserProfileHandler) {
+module.exports = function (UserProfileHandler, BooksActions) {
+
     UserProfileHandler.getOutcomingRequests().then((response) => {
         this.outcomingRequests = response;
     });
@@ -8,6 +9,26 @@ module.exports = function (UserProfileHandler) {
     UserProfileHandler.getUserBooks().then((response) => {
         this.userBooks = response;
     });
+
+    this.removeBook = function (book, index) {
+        BooksActions.removeBook(book.bookId);
+        this.userBooks.splice(index, 1);
+    };
+
+    this.removeUserRequest = function (book, index) {
+        BooksActions.removeRequest(book.bookId);
+        this.outcomingRequests.splice(index, 1);
+    };
+
+    this.acceptRequest = function (book, index) {
+        BooksActions.acceptRequest(book);
+        this.userBooks.splice(index, 1);
+    };
+
+    this.disallowRequest = function (book) {
+        BooksActions.removeRequest(book.bookId);
+        book.requestUser = null;
+    };
 
     this.userData = {
         'email': sessionStorage.getItem('userEmail'),

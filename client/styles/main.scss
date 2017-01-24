@@ -1,0 +1,111 @@
+//import custom bootstrap
+@import "libs/bootsrap/bootstrap";
+
+//imports
+@import "variables";
+@import "animation";
+@import "loader";
+@import "massonry-grid";
+@import "modal";
+
+//globals
+body {
+  font-size: $basicFontSize;
+  background-color: $basicBackgroundColor;
+  color: $basicFontColor;
+  font-family: $basicFontStyle;
+}
+h1,h2,h3,p,a {
+  font-family: $secondaryFontStyle;
+}
+a {
+  cursor: pointer;
+}
+.active {
+  background: #9954BB;
+}
+.book-thumb {
+  position: relative;
+  margin: 15px auto;
+   img {
+     margin: 0 auto;
+   }
+}
+.item, .user-books, .search-books {
+  @extend .book-thumb;
+}
+.item, .search-books {
+  cursor: pointer;
+}
+.icon {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  cursor: pointer;
+}
+.trade, .remove {
+  @extend .icon;
+  color: #ff0e13;
+}
+.accept {
+  @extend .icon;
+  position: static;
+  color: #3FB618;
+}
+.alert-message {
+  padding: 7px 10px;
+}
+.form-group {
+  margin: 25px 0;
+}
+
+//user profile
+.incoming-request {
+  position: absolute;
+  top: 20%;
+  left: 5%;
+  cursor: default;
+  background: $basicBackgroundColor;
+  text-align: center;
+  max-width: 80%;
+  .fa {
+    cursor: pointer;
+  }
+  .fa-check {
+    color: #3FB618;
+  }
+  .fa-remove {
+    color: #ff0e13;
+  }
+}
+.panel {
+  .panel-body {
+    background-color: #222;
+  }
+  .panel-body span {
+    padding: 5% 25px;
+  }
+}
+
+//books search
+.search-form {
+  margin: 40px auto;
+}
+.search-lang {
+  padding-top: 10px;
+}
+
+.search-field, .order-field {
+  display: inline-block;
+  margin: 5px 20px;
+  font-size: 2.1rem;
+  input, select {
+    color: #333;
+    border: 0;
+    padding: 7px 10px;
+    margin: 5px;
+  }
+}
+
+
+

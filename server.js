@@ -10,7 +10,7 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const favicon = require('serve-favicon');
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 require('./server/config/passport')(passport);
 require('./db');
 

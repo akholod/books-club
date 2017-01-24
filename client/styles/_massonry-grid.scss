@@ -1,0 +1,11 @@
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.grid-item {
+  width: $grid-elem-width;
+  height: $grid-elem-height;
+  float: left;
+  border-radius: 5px;
+}
