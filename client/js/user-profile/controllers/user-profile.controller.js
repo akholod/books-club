@@ -8,7 +8,6 @@ module.exports = function (UserProfileHandler, BooksActions) {
 
     UserProfileHandler.getUserBooks().then((response) => {
         this.userBooks = response;
-        console.log(this.userBooks[1])
     });
 
     this.removeBook = function (book, index) {
@@ -21,8 +20,9 @@ module.exports = function (UserProfileHandler, BooksActions) {
         this.outcomingRequests.splice(index, 1);
     };
 
-    this.acceptRequest = function () {
-
+    this.acceptRequest = function (book, index) {
+        BooksActions.acceptRequest(book);
+        this.userBooks.splice(index, 1);
     };
 
     this.disallowRequest = function (book) {

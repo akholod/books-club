@@ -47,5 +47,15 @@ module.exports = function($state, Restangular, ModalWindow) {
             }, (dataError) => {
                 new Error((dataError));
             });
+    };
+
+    this.acceptRequest = function (book) {
+        return Restangular.one('books', book.bookId).remove()
+            .then((response) => {
+                ModalWindow.openModalWindow(`You accept book trade. Contact user ${book.requestUser} for trading`, 'Success!');
+                return response;
+            }, (dataError) => {
+                new Error((dataError));
+            });
     }
 };
