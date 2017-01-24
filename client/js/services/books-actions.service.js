@@ -37,5 +37,15 @@ module.exports = function($state, Restangular, ModalWindow) {
             }, (dataError) => {
                 new Error((dataError));
             });
+    };
+
+    this.removeRequest = function (bookId) {
+        return Restangular.one('userbooks/wishlist', bookId).put()
+            .then((response) => {
+                ModalWindow.openModalWindow(response.message, 'Success!');
+                return response;
+            }, (dataError) => {
+                new Error((dataError));
+            });
     }
 };

@@ -19,6 +19,7 @@
             <div class="panel-body">
                 <div ng-repeat="requestBook in userProfileCtrl.outcomingRequests" class="item grid-item animate-repeat">
                     <img ng-src="{{requestBook.image}}" class="img-responsive" class="item grid-item animate-repeat">
+                    <i class="remove fa fa-remove" aria-hidden="true" ng-click="userProfileCtrl.removeUserRequest(requestBook, $index)"></i>
                 </div>
             </div>
         </div>
