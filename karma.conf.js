@@ -17,8 +17,9 @@ module.exports = function(config) {
     files: [
         './node_modules/angular/angular.js',
         './node_modules/angular-mocks/angular-mocks.js',
-        './client/js/',
-        './client/js/services/books-catalog.test.js'
+        './client/build/bundle.js',
+        './client/js/services/books-catalog.test.js',
+        './client/js/services/user-forms-validator.test.js'
     ],
 
 
