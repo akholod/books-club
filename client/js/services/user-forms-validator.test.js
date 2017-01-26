@@ -40,7 +40,7 @@ describe  ('app', function () {
             res = UserFormsValidator.isUsernameValid('Dima');
             expect(typeof res).toBe('undefined');
         }));
-        
+
     });
 });
 

@@ -19,7 +19,8 @@ module.exports = function(config) {
         './node_modules/angular-mocks/angular-mocks.js',
         './client/build/bundle.js',
         './client/js/services/books-catalog.test.js',
-        './client/js/services/user-forms-validator.test.js'
+        './client/js/services/user-forms-validator.test.js',
+        './client/js/services/book-search.test.js'
     ],
 
 
