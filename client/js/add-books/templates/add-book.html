@@ -8,7 +8,7 @@
             <input type="text" name="searchField" placeholder="Введите название книги" class="form-control" ng-model="addBooksCtrl.bookSearchField"/>
         </div>
         <div class="col-sm-3 text-left">
-            <button id="searchBtn" ng-click="addBooksCtrl.searchBook()" class="btn btn-success">Поиск</button>
+            <button id="searchBtn" ng-click="addBooksCtrl.searchBook(addBooksCtrl.bookSearchField)" class="btn btn-success">Поиск</button>
         </div>
     </div>
 </form>

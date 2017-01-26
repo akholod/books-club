@@ -20,7 +20,9 @@ module.exports = function(config) {
         './client/build/bundle.js',
         './client/js/services/books-catalog.test.js',
         './client/js/services/user-forms-validator.test.js',
-        './client/js/services/book-search.test.js'
+        './client/js/services/book-search.test.js',
+        './client/js/add-books/controllers/add-book.test.js',
+        './client/js/books-catalog/controllers/books-catalog.test.js'
     ],
 
 

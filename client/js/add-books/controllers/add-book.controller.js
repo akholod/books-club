@@ -3,9 +3,9 @@
 module.exports = function(BookSearch, BooksActions) {
     this.bookSearchLang = false;
 
-    this.searchBook = function () {
-        if (this.bookSearchField.length > 2) {
-            BookSearch.findBooks(this.bookSearchField, this.bookSearchLang).then((response) => {
+    this.searchBook = function (bookSearchField) {
+        if (bookSearchField.length > 2) {
+            BookSearch.findBooks(bookSearchField, this.bookSearchLang).then((response) => {
                 this.foundBooks = response.data;
             });
         }
