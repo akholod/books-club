@@ -3,7 +3,7 @@
 
 my pet-project SPA
 
-Used Angular 1.x. Node.js, Expres.js, Mongo DB and Webpack build
+Used Angular 1.x. Node.js, Expres.js, Mongo DB, Webpack build and Karma + Jasmine unit tests. 
 
 User story: 
   * Any user can view all books posted by every user in main catalog.
